@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rosso Maquinarias — Transporte de maquinaria, grúa y montajes industriales</title>
+<meta name="description" content="Transporte de maquinaria agrícola y pesada, montajes industriales, servicio de grúa y autoelevador. Cobertura nacional, equipos y operadores propios.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+<script>
+(function(){
+  try{
+    if(!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.documentElement.classList.add('hero-gsap');
+    }
+  }catch(e){}
+})();
+</script>
+</head>
+<body class="rm-page">
+
+<nav class="rm-nav" id="site-nav" data-solid="false">
+  <a href="#top" class="rm-nav__logo">
+    <img id="nav-logo" src="assets/logo-white.png" alt="Rosso Maquinarias" width="140" height="26">
+  </a>
+  <div class="rm-nav__links">
+    <a class="rm-nav__link" href="#servicios" data-nav-link="servicios">Servicios</a>
+    <a class="rm-nav__link" href="#cobertura" data-nav-link="cobertura">Cobertura</a>
+    <a class="rm-nav__link" href="#proyectos" data-nav-link="proyectos">Proyectos</a>
+    <a class="rm-nav__link" href="#nosotros" data-nav-link="nosotros">Nosotros</a>
+  </div>
+  <div class="rm-nav__actions">
+    <a href="#contacto" class="btn btn--primary btn--sm">Solicitar cotización</a>
+    <button class="rm-nav__burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span class="rm-nav__burger-bars"><span></span><span></span><span></span></span>
+    </button>
+  </div>
+</nav>
+<div class="rm-nav__menu" id="nav-menu" data-open="false" data-solid="false">
+  <a class="rm-nav__menu-link" href="#servicios">Servicios</a>
+  <a class="rm-nav__menu-link" href="#cobertura">Cobertura</a>
+  <a class="rm-nav__menu-link" href="#proyectos">Proyectos</a>
+  <a class="rm-nav__menu-link" href="#nosotros">Nosotros</a>
+</div>
+
+<div class="hero-wrap" id="hero-wrap">
+  <section class="hero" id="top" aria-label="Rosso Maquinarias">
+
+    <!-- Capa inferior: ilustración de línea, se revela con el scroll -->
+    <div class="layer layer--art">
+      <img class="layer__img" src="assets/photos/hero-illustration.png" alt="" aria-hidden="true">
+      <div class="hero__content">
+        <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
+        <p class="hero__lead">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
+      </div>
+    </div>
+
+    <!-- Capa superior: fotografía real, se recorta con el scroll -->
+    <div class="layer layer--photo">
+      <img class="layer__img" src="assets/photos/hero-izaje-ypf.png" alt="Grúa de Rosso Maquinarias izando un tótem YPF durante el atardecer.">
+      <div class="hero__content" aria-hidden="true">
+        <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
+        <p class="hero__lead">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
+      </div>
+    </div>
+
+    <!-- UI flotante: no se recorta, se desvanece con el scroll -->
+    <div class="hero__ui">
+      <aside class="hero-card" id="hero-card">
+        <div class="hero-card__figure">
+          <video id="hero-crane-video" muted loop playsinline preload="metadata" poster="assets/photos/card-thumb.jpg" aria-label="Grúa y camión de Rosso Maquinarias en operación.">
+            <source src="assets/video/hero-crane-truck.mp4" type="video/mp4">
+          </video>
+          <button class="hero-card__toggle" id="hero-crane-toggle" type="button" aria-label="Reproducir video" aria-pressed="false">
+            <svg class="icon--play" width="13" height="15" viewBox="0 0 13 15" fill="currentColor" aria-hidden="true"><path d="M13 7.5 0 15V0z"/></svg>
+            <svg class="icon--pause" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M1 0h4v16H1zm8 0h4v16H9z"/></svg>
+          </button>
+        </div>
+        <p class="hero-card__num">+10</p>
+        <p class="hero-card__label">Años de experiencia</p>
+        <a class="hero-card__link" href="#contacto">Solicitar cotización →</a>
+      </aside>
+    </div>
+
+  </section>
+</div>
+
+<main>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="stats__grid">
+      <div class="stats__left">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Primeros en llegar</span>
+          <h2 class="section-heading__title">Últimos en salir.</h2>
+        </div>
+        <div class="stats__numbers">
+          <div class="stat"><span class="stat__value">2009</span><span class="stat__label">Operando desde</span></div>
+          <div class="stat"><span class="stat__value">+2.400</span><span class="stat__label">Traslados completados</span></div>
+          <div class="stat"><span class="stat__value">24</span><span class="stat__label">Provincias alcanzadas</span></div>
+          <div class="stat"><span class="stat__value">85%</span><span class="stat__label">Clientes recurrentes</span></div>
+        </div>
+      </div>
+      <div class="stats__right">
+        <p class="stats__text">Coordinamos cada etapa del traslado —permisos, ruta, izaje y entrega— para que el cronograma de tu obra o tu campaña no dependa de terceros.</p>
+        <a href="#nosotros" class="btn btn--dark" style="width:fit-content">Conocé al equipo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="servicios">
+    <div class="services__inner">
+      <div class="services__head">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Qué hacemos</span>
+          <h2 class="section-heading__title">Cinco servicios. Un solo responsable.</h2>
+        </div>
+        <p class="services__intro">Operamos flota, grúas y autoelevadores propios. Eso significa un único interlocutor desde la cotización hasta que el equipo queda en posición.</p>
+      </div>
+
+      <div class="services__layout">
+        <div class="services__tabs" role="tablist" aria-label="Servicios">
+          <button class="service-tab" role="tab" data-service-tab="agricola" aria-pressed="true">
+            <span class="service-tab__title">Transporte de maquinaria agrícola</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <button class="service-tab" role="tab" data-service-tab="pesada" aria-pressed="false">
+            <span class="service-tab__title">Transporte de maquinaria pesada</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <button class="service-tab" role="tab" data-service-tab="montajes" aria-pressed="false">
+            <span class="service-tab__title">Montajes industriales</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <button class="service-tab" role="tab" data-service-tab="grua" aria-pressed="false">
+            <span class="service-tab__title">Servicio de grúa</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <button class="service-tab" role="tab" data-service-tab="autoelevador" aria-pressed="false">
+            <span class="service-tab__title">Servicio de autoelevador</span>
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+        </div>
+
+        <div class="services__panels">
+          <div class="services__panel" data-service-panel="agricola" data-active="true" style="background-image:url(assets/photos/transporte-agro.png)">
+            <div class="services__panel-scrim"></div>
+            <div class="services__panel-content">
+              <h3 class="services__panel-title">Transporte de maquinaria agrícola</h3>
+              <p class="services__panel-lead">Cosechadoras, tractores, pulverizadoras y sembradoras trasladadas de campo a campo o entre provincias.</p>
+              <ul class="services__panel-points">
+                <li>Carretones y semis porta-equipos</li>
+                <li>Permisos de circulación y escolta</li>
+                <li>Coordinación con ventanas de cosecha</li>
+              </ul>
+              <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
+            </div>
+          </div>
+          <div class="services__panel" data-service-panel="pesada" data-active="false" style="background-image:url(assets/photos/hero-transporte.png)">
+            <div class="services__panel-scrim"></div>
+            <div class="services__panel-content">
+              <h3 class="services__panel-title">Transporte de maquinaria pesada</h3>
+              <p class="services__panel-lead">Excavadoras, palas cargadoras, motoniveladoras y equipos fuera de gálibo hasta obra.</p>
+              <ul class="services__panel-points">
+                <li>Cargas especiales e indivisibles</li>
+                <li>Estudio de ruta y gálibos</li>
+                <li>Seguro de carga sobre valor declarado</li>
+              </ul>
+              <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
+            </div>
+          </div>
+          <div class="services__panel" data-service-panel="montajes" data-active="false" style="background-image:url(assets/photos/soldador.png)">
+            <div class="services__panel-scrim"></div>
+            <div class="services__panel-content">
+              <h3 class="services__panel-title">Montajes industriales</h3>
+              <p class="services__panel-lead">Armado, traslado interno y puesta en posición de líneas, silos, tanques y estructuras.</p>
+              <ul class="services__panel-points">
+                <li>Personal propio matriculado</li>
+                <li>Plan de izaje y memoria de cálculo</li>
+                <li>Trabajo en planta con producción activa</li>
+              </ul>
+              <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
+            </div>
+          </div>
+          <div class="services__panel" data-service-panel="grua" data-active="false" style="background-image:url(assets/photos/izaje-ypf.png)">
+            <div class="services__panel-scrim"></div>
+            <div class="services__panel-content">
+              <h3 class="services__panel-title">Servicio de grúa</h3>
+              <p class="services__panel-lead">Izajes de precisión con grúas hidráulicas para obra civil, industria y montaje de estructuras.</p>
+              <ul class="services__panel-points">
+                <li>Grúas de 20 a 100 toneladas</li>
+                <li>Operadores habilitados</li>
+                <li>Disponibilidad para urgencias</li>
+              </ul>
+              <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
+            </div>
+          </div>
+          <div class="services__panel" data-service-panel="autoelevador" data-active="false" style="background-image:url(assets/photos/autoelevador.png)">
+            <div class="services__panel-scrim"></div>
+            <div class="services__panel-content">
+              <h3 class="services__panel-title">Servicio de autoelevador</h3>
+              <p class="services__panel-lead">Movimiento de cargas dentro de planta, depósito y playa: pallets, bobinas y equipos.</p>
+              <ul class="services__panel-points">
+                <li>Capacidad de 2,5 a 16 toneladas</li>
+                <li>Alquiler por jornada o por mes</li>
+                <li>Con operador incluido</li>
+              </ul>
+              <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage -->
+  <section class="coverage" id="cobertura">
+    <div class="coverage__bg">
+      <div class="coverage__scrim"></div>
+      <div class="coverage__content">
+        <div class="coverage__inner">
+          <span class="coverage__eyebrow">Cobertura nacional</span>
+          <h2 class="coverage__title">Donde esté el equipo, llegamos.</h2>
+          <p class="coverage__lead">Operamos en todo el país con base propia y una red de apoyo en ruta. Gestionamos permisos, escoltas y seguros para que el traslado avance sin detenerse.</p>
+          <div class="coverage__regions">
+            <div class="coverage__region">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-top:3px"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+              <div><div class="coverage__region-name">Centro</div><div class="coverage__region-detail">Córdoba · Santa Fe · Entre Ríos</div></div>
+            </div>
+            <div class="coverage__region">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-top:3px"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+              <div><div class="coverage__region-name">Buenos Aires</div><div class="coverage__region-detail">AMBA · Interior · Puertos</div></div>
+            </div>
+            <div class="coverage__region">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-top:3px"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+              <div><div class="coverage__region-name">Cuyo</div><div class="coverage__region-detail">Mendoza · San Juan · San Luis</div></div>
+            </div>
+            <div class="coverage__region">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-top:3px"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+              <div><div class="coverage__region-name">NOA / NEA</div><div class="coverage__region-detail">Tucumán · Salta · Chaco</div></div>
+            </div>
+            <div class="coverage__region">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-top:3px"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+              <div><div class="coverage__region-name">Patagonia</div><div class="coverage__region-detail">Neuquén · Río Negro · Chubut</div></div>
+            </div>
+          </div>
+          <a href="#contacto" class="btn btn--ghost-inverse coverage__cta">Consultar disponibilidad en tu zona</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process">
+    <div class="process__grid">
+      <div class="process__intro">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Cómo trabajamos</span>
+          <h2 class="section-heading__title">Nada se improvisa.</h2>
+        </div>
+        <p class="process__text">Cada operación tiene un responsable asignado y un plan escrito antes de que el equipo salga del predio.</p>
+      </div>
+      <div class="process__list">
+        <div class="accordion-row" data-open="true">
+          <button class="accordion-row__head" aria-expanded="true">
+            <span class="accordion-row__title">01 — Relevamiento</span>
+            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
+          </button>
+          <div class="accordion-row__body">Tomamos medidas, peso y accesos del equipo. Si hace falta, vamos a verlo antes de cotizar.</div>
+        </div>
+        <div class="accordion-row" data-open="false">
+          <button class="accordion-row__head" aria-expanded="false">
+            <span class="accordion-row__title">02 — Planificación</span>
+            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
+          </button>
+          <div class="accordion-row__body">Definimos ruta, gálibos, permisos, escolta y el plan de izaje con memoria de cálculo.</div>
+        </div>
+        <div class="accordion-row" data-open="false">
+          <button class="accordion-row__head" aria-expanded="false">
+            <span class="accordion-row__title">03 — Ejecución</span>
+            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
+          </button>
+          <div class="accordion-row__body">Operadores propios, equipos verificados y seguimiento del viaje de punta a punta.</div>
+        </div>
+        <div class="accordion-row" data-open="false">
+          <button class="accordion-row__head" aria-expanded="false">
+            <span class="accordion-row__title">04 — Entrega</span>
+            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
+          </button>
+          <div class="accordion-row__body">Posicionamiento final, control junto al cliente y documentación de la operación.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work / projects -->
+  <section class="work" id="proyectos">
+    <div class="work__inner">
+      <div class="work__head">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Trabajos recientes</span>
+          <h2 class="section-heading__title">Obras que ya movimos.</h2>
+        </div>
+        <div class="work__nav">
+          <span class="work__counter" id="work-counter">01 / 03</span>
+          <button class="work__btn" id="work-prev" aria-label="Anterior">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12L6 12M12 19L5 12L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+          <button class="work__btn" id="work-next" aria-label="Siguiente">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="work__stage">
+        <div class="work__slide" data-work-slide="0" data-active="true">
+          <div class="project-card">
+            <div class="project-card__media">
+              <div class="project-card__badge badge badge--dark">Servicio de grúa</div>
+              <img src="assets/photos/izaje-ypf.png" alt="Izaje y montaje de tótem">
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Río Cuarto, Córdoba</span>
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Estación de servicio</span>
+              </div>
+              <h3 class="project-card__title">Izaje y montaje de tótem</h3>
+              <div class="project-card__tags">
+                <span class="badge badge--tag">Grúa 45t</span>
+                <span class="badge badge--tag">Montaje</span>
+                <span class="badge badge--tag">+1</span>
+              </div>
+              <p class="project-card__desc">Montaje de tótem publicitario de 14 metros con corte parcial de calzada y trabajo fuera del horario comercial para no interrumpir la operación.</p>
+              <div class="project-card__cta">
+                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
+                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work__slide" data-work-slide="1" data-active="false">
+          <div class="project-card">
+            <div class="project-card__media">
+              <div class="project-card__badge badge badge--dark">Autoelevador</div>
+              <img src="assets/photos/autoelevador.png" alt="Movimiento interno de pallets">
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Rosario, Santa Fe</span>
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Planta de acopio</span>
+              </div>
+              <h3 class="project-card__title">Movimiento interno de pallets</h3>
+              <div class="project-card__tags">
+                <span class="badge badge--tag">Autoelevador 7t</span>
+                <span class="badge badge--tag">Con operador</span>
+                <span class="badge badge--tag">+1</span>
+              </div>
+              <p class="project-card__desc">Servicio mensual de autoelevador con operador para carga y descarga de camiones en playa y depósito durante la temporada alta.</p>
+              <div class="project-card__cta">
+                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
+                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work__slide" data-work-slide="2" data-active="false">
+          <div class="project-card">
+            <div class="project-card__media">
+              <div class="project-card__badge badge badge--dark">Montajes industriales</div>
+              <img src="assets/photos/torno.jpg" alt="Traslado de línea de producción">
+            </div>
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Villa María, Córdoba</span>
+                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Industria metalmecánica</span>
+              </div>
+              <h3 class="project-card__title">Traslado de línea de producción</h3>
+              <div class="project-card__tags">
+                <span class="badge badge--tag">Montaje</span>
+                <span class="badge badge--tag">Desarme</span>
+                <span class="badge badge--tag">+1</span>
+              </div>
+              <p class="project-card__desc">Desarme, traslado y remontaje de una línea completa en planta con producción activa, coordinado en etapas para sostener el ritmo de fábrica.</p>
+              <div class="project-card__cta">
+                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
+                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="nosotros">
+    <div class="about__grid">
+      <div class="about__image"></div>
+      <div class="about__content">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Nosotros</span>
+          <h2 class="section-heading__title">Gente que conoce el equipo.</h2>
+        </div>
+        <p class="about__lead">Rosso Maquinarias es una empresa familiar de Río Cuarto que empezó moviendo maquinaria agrícola para productores de la zona. Hoy operamos flota, grúas y autoelevadores propios en todo el país, con el mismo criterio: el equipo del cliente se trata como si fuera nuestro.</p>
+        <div class="about__points">
+          <div class="about__point"><span class="about__point-title">Equipos propios</span><span class="about__point-desc">Sin subcontratar el traslado ni el izaje.</span></div>
+          <div class="about__point"><span class="about__point-title">Personal matriculado</span><span class="about__point-desc">Operadores y maquinistas habilitados.</span></div>
+          <div class="about__point"><span class="about__point-title">Seguros y permisos</span><span class="about__point-desc">Carga asegurada sobre valor declarado.</span></div>
+          <div class="about__point"><span class="about__point-title">Un solo interlocutor</span><span class="about__point-desc">El mismo responsable de punta a punta.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="testimonials__inner">
+      <div class="testimonials__head">
+        <div class="section-heading section-heading--center">
+          <span class="section-heading__eyebrow">Clientes</span>
+          <h2 class="section-heading__title">Nos vuelven a llamar.</h2>
+        </div>
+      </div>
+      <div class="testimonials__grid">
+        <div class="testimonial-card">
+          <p class="testimonial-card__quote">"Coordinaron el traslado de dos cosechadoras en plena campaña y llegaron el día que dijeron. Eso, en cosecha, vale todo."</p>
+          <div><div class="testimonial-card__name">Martín Bertolo</div><div class="testimonial-card__org">Agropecuaria La Estela</div></div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-card__quote">"Trabajaron dentro de la planta con la línea andando. Plan de izaje, gente con matrícula y cero paradas no previstas."</p>
+          <div><div class="testimonial-card__name">Paula Contreras</div><div class="testimonial-card__org">Metalúrgica Sur</div></div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-card__quote">"Los llamamos para una urgencia un sábado y tuvimos grúa en obra en cuatro horas. Desde ahí no cambiamos más de proveedor."</p>
+          <div><div class="testimonial-card__name">Diego Fuentes</div><div class="testimonial-card__org">Constructora Andina</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contacto">
+    <div class="contact__grid">
+      <div class="contact__info">
+        <div class="section-heading">
+          <span class="section-heading__eyebrow">Cotización</span>
+          <h2 class="section-heading__title">Contanos qué hay que mover.</h2>
+        </div>
+        <p class="contact__lead">Respondemos en el día con una propuesta concreta: equipo asignado, fecha posible y precio cerrado.</p>
+        <div class="contact__details">
+          <div class="contact__detail"><span class="contact__detail-k">Teléfono / WhatsApp</span><span class="contact__detail-v">+54 9 358 000 0000</span></div>
+          <div class="contact__detail"><span class="contact__detail-k">Correo</span><span class="contact__detail-v">operaciones@rossomaquinarias.com</span></div>
+          <div class="contact__detail"><span class="contact__detail-k">Base operativa</span><span class="contact__detail-v">Río Cuarto, Córdoba — Argentina</span></div>
+          <div class="contact__detail"><span class="contact__detail-k">Horario</span><span class="contact__detail-v">Lunes a sábado, 7 a 19 h. Urgencias 24 h.</span></div>
+        </div>
+      </div>
+
+      <form class="contact__form" id="contact-form" novalidate>
+        <div id="contact-fields">
+          <div class="contact__row">
+            <label class="field" for="nombre">
+              <span class="field__label">Nombre <span class="field__req">*</span></span>
+              <input type="text" id="nombre" name="nombre" required>
+            </label>
+            <label class="field" for="empresa">
+              <span class="field__label">Empresa</span>
+              <input type="text" id="empresa" name="empresa">
+            </label>
+          </div>
+          <div class="contact__row" style="margin-top:18px">
+            <label class="field" for="telefono">
+              <span class="field__label">Teléfono <span class="field__req">*</span></span>
+              <input type="tel" id="telefono" name="telefono" required>
+            </label>
+            <label class="field" for="zona">
+              <span class="field__label">Zona / provincia</span>
+              <input type="text" id="zona" name="zona">
+            </label>
+          </div>
+          <label class="field" for="servicio" style="margin-top:18px">
+            <span class="field__label">Servicio</span>
+            <select id="servicio" name="servicio">
+              <option value="">Seleccioná un servicio</option>
+              <option>Transporte de maquinaria agrícola</option>
+              <option>Transporte de maquinaria pesada</option>
+              <option>Montajes industriales</option>
+              <option>Servicio de grúa</option>
+              <option>Servicio de autoelevador</option>
+            </select>
+          </label>
+          <label class="field" for="detalle" style="margin-top:18px">
+            <span class="field__label">Qué hay que mover</span>
+            <textarea id="detalle" name="detalle" rows="4"></textarea>
+          </label>
+          <div class="contact__submit-row">
+            <button type="submit" class="btn btn--primary">Solicitar cotización</button>
+            <span class="contact__submit-note">Sin compromiso. Respuesta en el día.</span>
+          </div>
+        </div>
+        <div class="contact__success" id="contact-success" hidden>
+          <h3 class="contact__success-title">Consulta enviada.</h3>
+          <p class="contact__success-text">Un responsable de operaciones se comunica con vos dentro de las próximas horas hábiles.</p>
+          <button type="button" class="btn btn--ghost" id="contact-reset" style="margin-top:8px">Enviar otra consulta</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rm-footer">
+  <div class="rm-footer__grid">
+    <div class="rm-footer__brand">
+      <img src="assets/logo-white.png" alt="Rosso Maquinarias" width="150" height="30">
+      <p class="rm-footer__desc">Transporte de maquinaria agrícola y pesada, montajes industriales, servicio de grúa y autoelevador. Cobertura nacional.</p>
+      <div class="rm-footer__location">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
+        Río Cuarto, Córdoba — Argentina
+      </div>
+    </div>
+    <div class="rm-footer__col">
+      <span class="rm-footer__col-title">Servicios</span>
+      <a href="#contacto">Transporte de maquinaria agrícola</a>
+      <a href="#contacto">Transporte de maquinaria pesada</a>
+      <a href="#contacto">Montajes industriales</a>
+      <a href="#contacto">Servicio de grúa</a>
+      <a href="#contacto">Servicio de autoelevador</a>
+    </div>
+    <div class="rm-footer__col">
+      <span class="rm-footer__col-title">Empresa</span>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#cobertura">Cobertura nacional</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="rm-footer__bottom">
+    <span>© 2026 Rosso Maquinarias. Todos los derechos reservados.</span>
+    <a href="#top">Volver arriba</a>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/hero-gsap.js"></script>
+</body>
+</html>
