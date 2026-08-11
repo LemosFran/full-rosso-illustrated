@@ -1446,12 +1446,47 @@ main > .stats{
   </script>
 
   <!-- ========== GSAP ========== -->
+  <script>
+  /* Fallback nativo para móvil: no depende de una librería externa y
+     actualiza la revelación mientras se desplaza la hero. */
+  (function () {
+    if (!window.matchMedia('(max-width: 860px)').matches ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var wrap = document.getElementById('hero-wrap');
+    var hero = document.getElementById('hero');
+    var photo = hero && hero.querySelector('.layer--photo');
+    var art = hero && hero.querySelector('.layer--art .layer__img');
+    if (!wrap || !hero || !photo || !art) return;
+
+    var ticking = false;
+    function render() {
+      ticking = false;
+      var progress = Math.max(0, Math.min(1, -wrap.getBoundingClientRect().top / (window.innerHeight * 1.2)));
+      hero.style.setProperty('--reveal', String(progress * 100));
+      photo.style.opacity = String(1 - Math.max(0, (progress - .7) / .3));
+
+      var ratio = Math.min(window.innerWidth / 1440, window.innerHeight / 900) /
+        Math.max(window.innerWidth / 1440, window.innerHeight / 900);
+      art.style.transform = 'scale(' + (1 - progress * (1 - ratio * .92)) + ')';
+    }
+    function requestRender() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(render);
+      }
+    }
+    window.addEventListener('scroll', requestRender, { passive:true });
+    window.addEventListener('resize', requestRender);
+    render();
+  })();
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
   (function () {
     var hero = document.getElementById('hero');
-    if (!window.gsap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.gsap || window.matchMedia('(max-width: 860px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -1497,6 +1532,5 @@ main > .stats{
 
 </body>
 </html>
-
 
 
