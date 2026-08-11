@@ -1,90 +1,462 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rosso Maquinarias — Transporte de maquinaria, grúa y montajes industriales</title>
-<meta name="description" content="Transporte de maquinaria agrícola y pesada, montajes industriales, servicio de grúa y autoelevador. Cobertura nacional, equipos y operadores propios.">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/styles.css">
-<script>
-(function(){
-  try{
-    if(!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      document.documentElement.classList.add('hero-gsap');
-    }
-  }catch(e){}
-})();
-</script>
+<title>Rosso Maquinarias — Izaje y movimiento de suelos</title>
+<link rel="stylesheet" href="../../Documents/Full-Rosso-Illustrated/css/styles.css">
+
+<style>
+/* ============================================================
+   0. TIPOGRAFÍAS
+   Geom Graphic SemiBold  -> titulares, nav, botones, cifras
+   Arial Nova             -> cuerpo de texto
+   Cada archivo trae UN solo peso, así que se declara el peso real
+   y se apaga font-synthesis: si el navegador engorda o inclina por
+   su cuenta, el trazo de Geom se deforma.
+   ============================================================ */
+@font-face{
+  font-family:"Geom Graphic";
+  src:url("assets/geom-graphic-semibold.woff2") format("woff2");
+  font-weight:600;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Arial Nova";
+  src:url("assets/arial-nova.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+:root{
+  --navy:#001974;
+  --blue:#1668D8;          /* azul de interfaz: botones y acentos activos */
+  --orange:#FB8B04;
+  --sky:#8BACE9;
+  --white:#FFFFFF;
+  --ink:#0B1220;
+  --muted:rgba(11,18,32,.58);
+
+  --font-display:"Geom Graphic", "Arial Nova", system-ui, sans-serif;
+  --font-body:"Arial Nova", system-ui, sans-serif;
+
+  --pad:clamp(1.5rem, 6.6vw, 6rem);      /* 96px al ancho de la referencia */
+  --pad-top:clamp(1.25rem, 4.6vw, 4.2rem);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-synthesis:none;                   /* nada de negritas ni itálicas falsas */
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:2px}
+
+/* ============================================================
+   2. ESTRUCTURA DE SCROLL
+   320vh: 120vh para el reveal + 100vh para el solape de la sección
+   siguiente + los 100vh que ocupa el hero pegado.
+   ============================================================ */
+.hero-wrap{
+  position:relative;
+  z-index:1;
+  height:320vh;
+  height:320svh;
+}
+.hero{
+  position:sticky;
+  top:0;
+  height:100vh;
+  height:100svh;
+  overflow:visible;
+  background:var(--white);
+  --reveal:0;              /* 0 = foto entera · 100 = ilustración entera */
+}
+
+/* ============================================================
+   3. LAS DOS CAPAS SUPERPUESTAS
+   ============================================================ */
+.layer{position:absolute;inset:0}
+
+.layer__img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform-origin:center center;
+  will-change:transform;
+  overflow: visible;
+}
+
+.layer--art{background:var(--white);z-index:1}
+.layer--art{display:block}
+.layer--art .layer__img{
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  object-fit:cover;
+  transform-origin:center center;
+}
+
+.layer--photo{
+  z-index:2;
+  clip-path:inset(0% 0% calc(var(--reveal) * 1%) 0%);
+  will-change:clip-path;
+}
+.layer--photo::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,10,40,.45) 0%, rgba(0,10,40,0) 30%),
+    radial-gradient(120% 70% at 50% 36%, rgba(0,10,40,.42) 0%, rgba(0,10,40,0) 68%);
+  pointer-events:none;
+}
+
+/* ============================================================
+   4. CONTENIDO DUPLICADO — el titular partido
+   El mismo markup vive en las dos capas. La copia blanca está dentro
+   de .layer--photo, así que la recorta el mismo clip-path y deja ver
+   la copia navy de abajo, en registro exacto.
+   ============================================================ */
+.hero__content{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+}
+
+/* --- titular: bloque alto, centro óptico al 36% --- */
+.hero__title{
+  position:absolute;
+  left:var(--pad);
+  right:var(--pad);
+  top:36%;
+  translate:0 -50%;          /* propiedad aparte: GSAP anima transform y no la pisa */
+  margin:0;
+  text-align:center;
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(2.5rem, 6.6vw, 6rem);
+  line-height:1.06;
+  letter-spacing:-.025em;
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+
+/* --- bajada: despegada del titular, apoyada abajo --- */
+.hero__lede{
+  position:absolute;
+  left:var(--pad);
+  right:var(--pad);
+  bottom:17%;
+  margin:0 auto;
+  max-width:34rem;
+  text-align:center;
+  font-size:clamp(.95rem,1.2vw,1.075rem);
+  line-height:1.5;
+}
+
+.layer--photo .hero__title{color:var(--white)}
+.layer--photo .hero__lede{color:rgba(255,255,255,.9)}
+.layer--art  .hero__title{color:var(--navy)}
+.layer--art  .hero__lede{color:var(--muted)}
+
+.dot{color:var(--orange)}
+
+/* ============================================================
+   5. UI FIJA — nav y tarjeta, fuera de las capas recortadas
+   ============================================================ */
+.hero__ui{position:absolute;inset:0;z-index:5;pointer-events:none}
+.hero__ui > *{pointer-events:auto}
+
+.nav{
+  position:absolute;
+  top:var(--pad-top);
+  left:var(--pad);
+  right:var(--pad);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1.5rem;
+}
+
+/* logo: imagen de marca. El archivo es blanco puro sobre alpha,
+   así que sobre fondo claro se recolorea con un filtro en vez de
+   mantener un segundo archivo. */
+.logo{display:block;line-height:0}
+.logo img{
+  width:clamp(8.5rem,13vw,12rem);
+  height:auto;
+}
+
+/* links centrados respecto de la ventana, no repartidos por flex */
+.nav__links{
+  position:absolute;
+  left:50%;
+  top:50%;
+  translate:-50% -50%;
+  display:flex;
+  gap:clamp(1rem,2.2vw,2.1rem);
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(.82rem,1vw,.95rem);
+  color:var(--white);
+  white-space:nowrap;
+}
+.nav__links a{position:relative;padding:.3rem 0}
+.nav__links a::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:100%;height:2px;
+  background:var(--orange);
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .35s var(--ease);
+}
+.nav__links a:hover::after{transform:scaleX(1);transform-origin:left}
+
+.btn{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(.85rem,1.1vw,1.05rem);
+  letter-spacing:.01em;
+  text-transform:uppercase;
+  color:var(--white);
+  background:var(--blue);
+  padding:clamp(.85rem,1.5vw,1.15rem) clamp(1.2rem,2.4vw,2.1rem);
+  border-radius:8px;
+  transition:background .3s var(--ease), transform .3s var(--ease);
+}
+.btn:hover{background:var(--navy);transform:translateY(-2px)}
+
+/* tarjeta inferior derecha */
+.card{
+  position:absolute;
+  right:var(--pad);
+  bottom:17%;
+  width:clamp(10rem,14.5vw,13.5rem);
+  background:var(--white);
+  border-radius:10px;
+  padding:.7rem;
+  box-shadow:0 26px 60px -20px rgba(0,25,116,.5);
+}
+.card__figure{
+  position:relative;
+  aspect-ratio:16/10;
+  border-radius:6px;
+  overflow:hidden;
+  background:var(--navy);
+}
+.card__figure img,
+.card__figure video{width:100%;height:100%;object-fit:cover}
+.card__video-toggle{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:2.8rem;height:2.8rem;
+  display:grid;place-items:center;
+  border:0;
+  border-radius:50%;
+  background:var(--blue);
+  color:var(--white);
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
+  cursor:pointer;
+  transition:transform .3s var(--ease),background .3s var(--ease);
+}
+.card__video-toggle:hover{transform:scale(1.09);background:var(--navy)}
+.card__video-toggle .icon--pause{display:none}
+.card__video-toggle.is-playing .icon--play{display:none}
+.card__video-toggle.is-playing .icon--pause{display:block}
+.card__num{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(1.3rem,1.9vw,1.72rem);
+  line-height:1;
+  letter-spacing:-.01em;
+  color:var(--navy);
+  margin:.75rem 0 .2rem;
+}
+.card__label{margin:0;font-size:.86rem;color:var(--muted)}
+.card__link{
+  display:inline-block;
+  margin-top:.6rem;
+  font-size:.8rem;
+  color:var(--navy);
+  border-bottom:1px solid currentColor;
+}
+.card__link:hover{color:var(--orange)}
+
+/* ============================================================
+   6. SECCIÓN SIGUIENTE — trepa por encima del hero pegado
+   ============================================================ */
+.next{
+  position:relative;
+  z-index:10;
+  margin-top:-100vh;
+  margin-top:-100svh;
+  box-shadow:0 -40px 80px -30px rgba(0,0,0,.55);
+  background:var(--navy);
+  color:var(--white);
+  min-height:100vh;
+  min-height:100svh;
+  display:grid;
+  align-content:center;
+  gap:1.2rem;
+  padding:clamp(4rem,10vw,8rem) var(--pad);
+}
+.next .eyebrow{
+  margin:0;
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.72rem;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:var(--sky);
+}
+.next h2{
+  margin:0;
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(1.9rem,4.6vw,3.4rem);
+  line-height:1.05;
+  letter-spacing:-.025em;
+  text-transform:uppercase;
+  max-width:18ch;
+}
+.next p{margin:0;max-width:52ch;color:rgba(255,255,255,.72);font-size:1.05rem;line-height:1.6}
+
+/* La primera sección de contenido asciende sobre la ilustración, pero
+   continúa desplazándose con el resto de la página. */
+main > .stats{
+  position:relative;
+  z-index:10;
+  margin-top:-100vh;
+  margin-top:-100svh;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 -40px 80px -30px rgba(0,0,0,.45);
+}
+
+.about__image{
+  width:100%;
+  height:auto;
+  aspect-ratio:570 / 606;
+}
+
+.footer{
+  position:relative;
+  z-index:10;
+  background:var(--ink);
+  color:rgba(255,255,255,.6);
+  font-size:.9rem;
+  padding:clamp(2.5rem,6vw,4rem) var(--pad);
+}
+.footer p{margin:0}
+
+/* ============================================================
+   7. MOBILE + ACCESIBILIDAD
+   ============================================================ */
+@media (max-width:860px){
+  .nav__links{display:none}
+  .hero__title{top:34%;font-size:clamp(2.1rem,9vw,3.4rem)}
+  .hero__lede{bottom:42%;font-size:.95rem}
+  .card{
+    right:clamp(1rem,5vw,1.5rem);
+    bottom:clamp(1rem,4vw,1.5rem);
+    width:clamp(7.5rem,38vw,9rem);
+    padding:.55rem;
+  }
+  .about__image{aspect-ratio:313 / 342}
+}
+@media (max-width:860px) and (max-height:600px){
+  .hero__lede{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
-<body class="rm-page">
 
-<nav class="rm-nav" id="site-nav" data-solid="false">
-  <a href="#top" class="rm-nav__logo">
-    <img id="nav-logo" src="assets/logo-white.png" alt="Rosso Maquinarias" width="140" height="26">
-  </a>
-  <div class="rm-nav__links">
-    <a class="rm-nav__link" href="#servicios" data-nav-link="servicios">Servicios</a>
-    <a class="rm-nav__link" href="#cobertura" data-nav-link="cobertura">Cobertura</a>
-    <a class="rm-nav__link" href="#proyectos" data-nav-link="proyectos">Proyectos</a>
-    <a class="rm-nav__link" href="#nosotros" data-nav-link="nosotros">Nosotros</a>
-  </div>
-  <div class="rm-nav__actions">
-    <a href="#contacto" class="btn btn--primary btn--sm">Solicitar cotización</a>
-    <button class="rm-nav__burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
-      <span class="rm-nav__burger-bars"><span></span><span></span><span></span></span>
-    </button>
-  </div>
-</nav>
-<div class="rm-nav__menu" id="nav-menu" data-open="false" data-solid="false">
-  <a class="rm-nav__menu-link" href="#servicios">Servicios</a>
-  <a class="rm-nav__menu-link" href="#cobertura">Cobertura</a>
-  <a class="rm-nav__menu-link" href="#proyectos">Proyectos</a>
-  <a class="rm-nav__menu-link" href="#nosotros">Nosotros</a>
-</div>
+<body>
 
-<div class="hero-wrap" id="hero-wrap">
-  <section class="hero" id="top" aria-label="Rosso Maquinarias">
+  <!-- ========== HERO ========== -->
+  <div class="hero-wrap" id="hero-wrap">
+    <section class="hero" id="hero" aria-label="Rosso Maquinarias">
 
-    <!-- Capa inferior: ilustración de línea, se revela con el scroll -->
-    <div class="layer layer--art">
-      <img class="layer__img" src="assets/photos/hero-illustration.png" alt="" aria-hidden="true">
-      <div class="hero__content">
-        <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
-        <p class="hero__lead">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
-      </div>
-    </div>
-
-    <!-- Capa superior: fotografía real, se recorta con el scroll -->
-    <div class="layer layer--photo">
-      <img class="layer__img" src="assets/photos/hero-photo.jpg" alt="Grúa de Rosso Maquinarias izando un tótem YPF durante el atardecer.">
-      <div class="hero__content" aria-hidden="true">
-        <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
-        <p class="hero__lead">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
-      </div>
-    </div>
-
-    <!-- UI flotante: no se recorta, se desvanece con el scroll -->
-    <div class="hero__ui">
-      <aside class="hero-card" id="hero-card">
-        <div class="hero-card__figure">
-          <video id="hero-crane-video" muted loop playsinline preload="metadata" poster="assets/photos/card-thumb.jpg" aria-label="Grúa y camión de Rosso Maquinarias en operación.">
-            <source src="assets/video/hero-crane-truck.mp4" type="video/mp4">
-          </video>
-          <button class="hero-card__toggle" id="hero-crane-toggle" type="button" aria-label="Reproducir video" aria-pressed="false">
-            <svg class="icon--play" width="13" height="15" viewBox="0 0 13 15" fill="currentColor" aria-hidden="true"><path d="M13 7.5 0 15V0z"/></svg>
-            <svg class="icon--pause" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M1 0h4v16H1zm8 0h4v16H9z"/></svg>
-          </button>
+      <!-- CAPA INFERIOR — ilustración de línea -->
+      <div class="layer layer--art">
+        <img class="layer__img" src="assets/hero-illustration.png" alt="Ilustración técnica de línea de una grúa hidráulica sobre camión de Rosso Maquinarias.">
+        <div class="hero__content">
+          <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
+          <p class="hero__lede">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
         </div>
-        <p class="hero-card__num">+10</p>
-        <p class="hero-card__label">Años de experiencia</p>
-        <a class="hero-card__link" href="#contacto">Solicitar cotización →</a>
-      </aside>
-    </div>
+      </div>
 
-  </section>
-</div>
+      <!-- CAPA SUPERIOR — fotografía, se recorta con el scroll -->
+      <div class="layer layer--photo">
+        <img class="layer__img" src="assets/hero-photo.jpg" alt="Grúa de Rosso Maquinarias izando un tótem YPF durante el atardecer.">
+        <div class="hero__content" aria-hidden="true">
+          <h1 class="hero__title">Levantamos lo que<br>nadie más puede<span class="dot">.</span></h1>
+          <p class="hero__lede">Grúas, hidroelevadores y movimiento de suelos para obra pública y privada en Brinkmann y toda la región centro de Córdoba.</p>
+        </div>
+      </div>
 
+      <!-- UI -->
+      <div class="hero__ui">
+        <header class="nav">
+          <a class="logo" href="#hero">
+            <img src="assets/logo-rosso.png" alt="Rosso Maquinarias" width="600" height="100">
+          </a>
+          <nav class="nav__links" aria-label="Principal">
+            <a href="#servicios">Izaje</a>
+            <a href="#servicios">Hidroelevador</a>
+            <a href="#servicios">Suelos</a>
+            <a href="#servicios">Obra</a>
+          </nav>
+          <a class="btn" href="#contacto">Contactar</a>
+        </header>
+
+        <aside class="card">
+          <div class="card__figure">
+            <video id="hero-crane-video" muted loop playsinline preload="metadata" aria-label="Grúa y camión de Rosso Maquinarias en operación.">
+              <source src="hero-crane-truck.mp4" type="video/mp4">
+            </video>
+            <button class="card__video-toggle" id="hero-crane-toggle" type="button" aria-label="Reproducir video" aria-pressed="false">
+              <svg class="icon--play" width="13" height="15" viewBox="0 0 13 15" fill="currentColor" aria-hidden="true"><path d="M13 7.5 0 15V0z"/></svg>
+              <svg class="icon--pause" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M1 0h4v16H1zm8 0h4v16H9z"/></svg>
+            </button>
+          </div>
+          <p class="card__num">+10</p>
+          <p class="card__label">Años de experiencia</p>
+          <a class="card__link" href="#contacto">Solicitar cotización →</a>
+        </aside>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ========== SECCIÓN SIGUIENTE ========== -->
+
+
+  <!-- ========== SECCIONES TRANSFERIDAS ========== -->
 <main>
 
   <!-- Stats -->
@@ -145,7 +517,7 @@
         </div>
 
         <div class="services__panels">
-          <div class="services__panel" data-service-panel="agricola" data-active="true" style="background-image:url(assets/photos/transporte-agro.png)">
+          <div class="services__panel" data-service-panel="agricola" data-active="true" style="background-image:url(../../Documents/Full-Rosso-Illustrated/assets/photos/transporte-agro.png)">
             <div class="services__panel-scrim"></div>
             <div class="services__panel-content">
               <h3 class="services__panel-title">Transporte de maquinaria agrícola</h3>
@@ -158,7 +530,7 @@
               <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
             </div>
           </div>
-          <div class="services__panel" data-service-panel="pesada" data-active="false" style="background-image:url(assets/photos/hero-transporte.png)">
+          <div class="services__panel" data-service-panel="pesada" data-active="false" style="background-image:url(../../Documents/Full-Rosso-Illustrated/assets/photos/hero-transporte.png)">
             <div class="services__panel-scrim"></div>
             <div class="services__panel-content">
               <h3 class="services__panel-title">Transporte de maquinaria pesada</h3>
@@ -171,7 +543,7 @@
               <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
             </div>
           </div>
-          <div class="services__panel" data-service-panel="montajes" data-active="false" style="background-image:url(assets/photos/soldador.png)">
+          <div class="services__panel" data-service-panel="montajes" data-active="false" style="background-image:url(../../Documents/Full-Rosso-Illustrated/assets/photos/soldador.png)">
             <div class="services__panel-scrim"></div>
             <div class="services__panel-content">
               <h3 class="services__panel-title">Montajes industriales</h3>
@@ -184,7 +556,7 @@
               <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
             </div>
           </div>
-          <div class="services__panel" data-service-panel="grua" data-active="false" style="background-image:url(assets/photos/izaje-ypf.png)">
+          <div class="services__panel" data-service-panel="grua" data-active="false" style="background-image:url(../../Documents/Full-Rosso-Illustrated/assets/photos/izaje-ypf.png)">
             <div class="services__panel-scrim"></div>
             <div class="services__panel-content">
               <h3 class="services__panel-title">Servicio de grúa</h3>
@@ -197,7 +569,7 @@
               <a href="#contacto" class="btn btn--primary services__panel-cta">Cotizar este servicio</a>
             </div>
           </div>
-          <div class="services__panel" data-service-panel="autoelevador" data-active="false" style="background-image:url(assets/photos/autoelevador.png)">
+          <div class="services__panel" data-service-panel="autoelevador" data-active="false" style="background-image:url(../../Documents/Full-Rosso-Illustrated/assets/photos/autoelevador.png)">
             <div class="services__panel-scrim"></div>
             <div class="services__panel-content">
               <h3 class="services__panel-title">Servicio de autoelevador</h3>
@@ -319,7 +691,7 @@
           <div class="project-card">
             <div class="project-card__media">
               <div class="project-card__badge badge badge--dark">Servicio de grúa</div>
-              <img src="assets/photos/izaje-ypf.png" alt="Izaje y montaje de tótem">
+              <img src="../../Documents/Full-Rosso-Illustrated/assets/photos/izaje-ypf.png" alt="Izaje y montaje de tótem">
             </div>
             <div class="project-card__body">
               <div class="project-card__meta">
@@ -345,7 +717,7 @@
           <div class="project-card">
             <div class="project-card__media">
               <div class="project-card__badge badge badge--dark">Autoelevador</div>
-              <img src="assets/photos/autoelevador.png" alt="Movimiento interno de pallets">
+              <img src="../../Documents/Full-Rosso-Illustrated/assets/photos/autoelevador.png" alt="Movimiento interno de pallets">
             </div>
             <div class="project-card__body">
               <div class="project-card__meta">
@@ -371,7 +743,7 @@
           <div class="project-card">
             <div class="project-card__media">
               <div class="project-card__badge badge badge--dark">Montajes industriales</div>
-              <img src="assets/photos/torno.jpg" alt="Traslado de línea de producción">
+              <img src="../../Documents/Full-Rosso-Illustrated/assets/photos/torno.jpg" alt="Traslado de línea de producción">
             </div>
             <div class="project-card__body">
               <div class="project-card__meta">
@@ -515,7 +887,7 @@
 <footer class="rm-footer">
   <div class="rm-footer__grid">
     <div class="rm-footer__brand">
-      <img src="assets/logo-white.png" alt="Rosso Maquinarias" width="150" height="30">
+      <img src="../../Documents/Full-Rosso-Illustrated/assets/logo-white.png" alt="Rosso Maquinarias" width="150" height="30">
       <p class="rm-footer__desc">Transporte de maquinaria agrícola y pesada, montajes industriales, servicio de grúa y autoelevador. Cobertura nacional.</p>
       <div class="rm-footer__location">
         <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>
@@ -540,13 +912,89 @@
   </div>
   <div class="rm-footer__bottom">
     <span>© 2026 Rosso Maquinarias. Todos los derechos reservados.</span>
-    <a href="#top">Volver arriba</a>
+    <a href="#hero">Volver arriba</a>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
-<script src="js/vendor/gsap.min.js"></script>
-<script src="js/vendor/ScrollTrigger.min.js"></script>
-<script src="js/hero-gsap.js"></script>
+<!-- El script de las secciones requiere estos controles de navegación,
+     que permanecen invisibles porque la navegación visible pertenece a la hero. -->
+<div hidden aria-hidden="true">
+  <nav id="site-nav"><img id="nav-logo" alt=""></nav>
+  <div id="nav-menu"></div>
+  <button id="nav-burger" type="button"><span class="rm-nav__burger-bars"></span></button>
+</div>
+<script src="../../Documents/Full-Rosso-Illustrated/js/main.js"></script>
+
+  <script>
+  (function () {
+    var video = document.getElementById('hero-crane-video');
+    var toggle = document.getElementById('hero-crane-toggle');
+    if (!video || !toggle) return;
+
+    function update(isPlaying) {
+      toggle.classList.toggle('is-playing', isPlaying);
+      toggle.setAttribute('aria-pressed', String(isPlaying));
+      toggle.setAttribute('aria-label', isPlaying ? 'Pausar video' : 'Reproducir video');
+    }
+
+    toggle.addEventListener('click', function () {
+      if (video.paused) video.play().catch(function () {});
+      else video.pause();
+    });
+    video.addEventListener('play', function () { update(true); });
+    video.addEventListener('pause', function () { update(false); });
+  })();
+  </script>
+
+  <!-- ========== GSAP ========== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+  (function () {
+    var hero = document.getElementById('hero');
+    if (!window.gsap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* Un solo tween mueve --reveal de 0 a 100. El CSS la lee en el
+       clip-path de la capa superior, así que el corte sube desde abajo
+       y va descubriendo la ilustración. */
+    var tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#hero-wrap',
+        start: 'top top',
+        end: '+=120%',            // el reveal usa 120vh; los 100vh restantes son el solape
+        scrub: 0.6,
+        invalidateOnRefresh: true
+      }
+    });
+
+    /* a) el reveal */
+    tl.to(hero, { '--reveal': 100, ease: 'none', duration: 0.70 }, 0);
+
+    /* b) el desarme, en cascada de abajo hacia arriba: cada elemento
+       sale justo antes de que el borde del corte lo alcance. */
+    tl.to(['.hero__lede', '.card'], { autoAlpha: 0, y: 40,  ease: 'none', duration: 0.26 }, 0.02);
+    tl.to('.hero__title',           { autoAlpha: 0, y: -60, ease: 'none', duration: 0.32 }, 0.12);
+    tl.to('.nav',                   { autoAlpha: 0, y: -36, ease: 'none', duration: 0.25 }, 0.28);
+
+    /* La foto ya está recortada al 100%; la apagamos como seguro. */
+    tl.to('.layer--photo', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 0.70);
+
+    /* c) el asentado: recién ahora, con la foto fuera de pantalla,
+       la ilustración pasa del encuadre COVER al CONTAIN para quedar
+       entera.  scale = contain / cover = min(rw,rh) / max(rw,rh) */
+    tl.to('.layer--art .layer__img', {
+      scale: function () {
+        var rw = window.innerWidth / 1440;
+        var rh = window.innerHeight / 900;
+        return (Math.min(rw, rh) / Math.max(rw, rh)) * 0.92;
+      },
+      ease: 'power2.out',
+      duration: 0.26
+    }, 0.74);
+  })();
+  </script>
+
 </body>
 </html>
