@@ -74,11 +74,7 @@
   var artImg = hero.querySelector('.layer--art .layer__img');
 
   function photoPointToScreen(p, cW, cH) {
-    // The photo layer renders with object-fit:contain (whole image, no
-    // crop), so this must mirror contain's scale math (min, not cover's
-    // max) or the illustration would register against a crop that no
-    // longer happens and drift off the photo's actual crane again.
-    var s = Math.min(cW / PHOTO_W, cH / PHOTO_H);
+    var s = Math.max(cW / PHOTO_W, cH / PHOTO_H);
     return { x: p.x * s + (cW - PHOTO_W * s) / 2, y: p.y * s + (cH - PHOTO_H * s) / 2 };
   }
 

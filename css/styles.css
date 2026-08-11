@@ -239,11 +239,6 @@ button{font:inherit}
   left:0;top:0;width:1440px;height:900px;max-width:none;object-fit:none;
   transform-origin:610px 575px;
 }
-/* Full, uncropped photo: contain (not cover) so the whole composition —
-   crane base to boom tip — stays on screen at any viewport size, with
-   letterboxing instead of a crop when the aspect ratio doesn't match. */
-.layer--photo{background:var(--color-ink)}
-.layer--photo .layer__img{object-fit:contain}
 .layer--photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,16,.62) 0%,rgba(8,10,16,.35) 38%,rgba(8,10,16,.88) 100%)}
 
 .hero__content{position:absolute;inset:0;z-index:3;pointer-events:none}
