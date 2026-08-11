@@ -54,6 +54,13 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Mobile browsers fire resize/scroll jumps as the address bar
+  // hides and shows, which a pinned+scrubbed ScrollTrigger otherwise
+  // reads as sudden scroll-position changes and jerks/skips. This is
+  // GSAP's own fix: it takes over scrolling (still native-feeling,
+  // touch included) and smooths that out.
+  if (ScrollTrigger.normalizeScroll) ScrollTrigger.normalizeScroll(true);
+
   var tl = gsap.timeline({
     scrollTrigger: {
       trigger: heroWrap,

@@ -222,7 +222,10 @@ button{font:inherit}
    hasn't asked for reduced motion.
    ============================================================ */
 .hero-wrap{position:relative}
-.hero{position:relative;min-height:100vh;overflow:hidden;background:var(--color-ink);--reveal:0}
+.hero{
+  position:relative;overflow:hidden;background:var(--color-ink);--reveal:0;
+  min-height:100vh;min-height:100svh; /* svh: stable height on mobile, ignores the address-bar show/hide */
+}
 
 .layer{position:absolute;inset:0}
 .layer__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform-origin:center center;will-change:transform}
@@ -272,12 +275,22 @@ button{font:inherit}
 .hero-card__link{display:inline-block;margin-top:.5rem;font-size:.78rem;color:var(--action-primary);border-bottom:1px solid currentColor}
 .hero-card__link:hover{color:var(--action-primary-hover)}
 
-/* ---- Enhanced (GSAP) mode: sticky pin + clip-path reveal ---- */
-html.hero-gsap .hero-wrap{height:320vh}
-html.hero-gsap .hero{position:sticky;top:0;height:100vh}
+/* ---- Enhanced (GSAP) mode: sticky pin + clip-path reveal ----
+   svh (not vh, not dvh) on purpose: it's the height with the mobile
+   browser's address bar fully shown — a fixed number that doesn't
+   shift while pinned. Regular vh assumes the bar is hidden (taller
+   than what's actually visible on load) and dvh live-recalculates as
+   the bar hides/shows, which is exactly the kind of mid-scroll height
+   change that breaks a pinned ScrollTrigger on mobile. */
+html.hero-gsap .hero-wrap{height:320vh;height:320svh}
+html.hero-gsap .hero{position:sticky;top:0;height:100vh;height:100svh}
 html.hero-gsap .layer--art{display:flex}
 html.hero-gsap .layer--photo{clip-path:inset(0% 0% calc(var(--reveal) * 1%) 0%);will-change:clip-path}
-html.hero-gsap .stats{position:relative;z-index:10;margin-top:-100vh;min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;box-shadow:0 -40px 80px -30px rgba(0,0,0,.45)}
+html.hero-gsap .stats{
+  position:relative;z-index:10;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 -40px 80px -30px rgba(0,0,0,.45);
+  margin-top:-100vh;margin-top:-100svh;min-height:100vh;min-height:100svh;
+}
 
 /* ============================================================
    Stats section
@@ -466,7 +479,10 @@ html.hero-gsap .stats{position:relative;z-index:10;margin-top:-100vh;min-height:
   main>section{padding-left:20px;padding-right:20px}
   /* narrow phones wrap the lede to 3 lines, which runs into the
      card's bottom-right corner at the reference's own 22%/5%
-     offsets — pull them apart just enough to clear it */
-  .hero__lead{bottom:27%}
-  .hero-card{bottom:3%;width:8rem}
+     offsets. Percentage tweaks here are fragile — real phones report
+     a shorter effective height than their CSS viewport once the
+     browser's address bar is accounted for — so rather than chase
+     an exact fit, drop the card at this breakpoint entirely. */
+  .hero__lead{bottom:24%}
+  .hero-card{display:none}
 }
