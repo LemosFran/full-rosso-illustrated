@@ -61,35 +61,28 @@
   // touch included) and smooths that out.
   if (ScrollTrigger.normalizeScroll) ScrollTrigger.normalizeScroll(true);
 
-  /* ---------- Art layer sizing (cover-to-contain, done manually) ----------
+  /* ---------- Art layer sizing (always fully visible, never cropped) ----------
      The art image is boxed at its real native size (1440x900, set in
      CSS) instead of object-fit:cover, because object-fit clips at
-     layout time and no transform can un-clip it afterwards — animating
-     "scale" on a cover-fit image just zooms the already-cropped result,
-     it never reveals the rest of the drawing. Computing an explicit
-     cover state and contain state from the hero's own measured box
-     (never window.innerWidth/innerHeight, which drift from it on
-     mobile) and tweening between them is what actually works. */
+     layout time and no transform can un-clip it afterwards. It's kept
+     permanently in a "contain" state — whole drawing on screen, scaled
+     down and centered rather than cropped to fill — computed from the
+     hero's own measured box (never window.innerWidth/innerHeight,
+     which drift from it on mobile) so it never depends on a cover-crop
+     stage that could push part of the crane outside the viewport. */
   var ART_W = 1440, ART_H = 900;
   var artImg = hero.querySelector('.layer--art .layer__img');
 
-  function coverArtState() {
-    var r = hero.getBoundingClientRect();
-    var s = Math.max(r.width / ART_W, r.height / ART_H);
-    return { x: (r.width - ART_W * s) / 2, y: (r.height - ART_H * s) / 2, scale: s };
-  }
   function containArtState() {
     var r = hero.getBoundingClientRect();
     var s = Math.min(r.width / ART_W, r.height / ART_H) * 0.92;
     return { x: (r.width - ART_W * s) / 2, y: (r.height - ART_H * s) / 2, scale: s };
   }
-  function applyCoverArtState() {
-    if (artImg) gsap.set(artImg, coverArtState());
+  function applyContainArtState() {
+    if (artImg) gsap.set(artImg, containArtState());
   }
-  applyCoverArtState();
-  // Keep the pre-settle framing matched to the (possibly resized) hero
-  // box, same as the settle tween's own end values below.
-  ScrollTrigger.addEventListener('refreshInit', applyCoverArtState);
+  applyContainArtState();
+  ScrollTrigger.addEventListener('refreshInit', applyContainArtState);
 
   var tl = gsap.timeline({
     scrollTrigger: {
@@ -118,16 +111,6 @@
 
   /* c) the photo is fully clipped away by now; hide it as a safety net */
   tl.to('.layer--photo', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 0.70);
-
-  /* d) settle: the illustration goes from COVER framing to CONTAIN so
-     the whole line drawing sits on screen once the photo is gone. */
-  tl.to('.layer--art .layer__img', {
-    x: function () { return containArtState().x; },
-    y: function () { return containArtState().y; },
-    scale: function () { return containArtState().scale; },
-    ease: 'power2.out',
-    duration: 0.26
-  }, 0.74);
 
   /* Nav comes back once the next section climbs over the pinned hero. */
   var nextSection = document.querySelector('.stats');
