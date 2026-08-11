@@ -228,6 +228,17 @@ button{font:inherit}
 .layer__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transform-origin:center center;will-change:transform}
 .layer--art{display:none;z-index:1;background:var(--surface-page)}
 .layer--photo{z-index:2}
+
+/* The art layer is positioned manually (not object-fit:cover) so its
+   crane can be registered pixel-for-pixel against the photo's crane —
+   see js/hero-gsap.js alignCraneLayers(). Box is fixed at the source
+   PNG's native 1440x900 so the JS math (in native pixels) stays exact;
+   transform-origin sits at the boom-pivot landmark used for that math,
+   so scale/rotate never drifts the registration point. */
+.layer--art .layer__img{
+  left:0;top:0;width:1440px;height:900px;max-width:none;object-fit:none;
+  transform-origin:610px 575px;
+}
 .layer--photo::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,10,16,.62) 0%,rgba(8,10,16,.35) 38%,rgba(8,10,16,.88) 100%)}
 
 .hero__content{position:absolute;inset:0;z-index:3;pointer-events:none}

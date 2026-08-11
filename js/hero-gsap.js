@@ -54,6 +54,69 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  /* ---------- Crane registration: art layer <-> photo layer ----------
+     Two landmarks (boom pivot, boom mid-joint) measured directly on the
+     source PNGs, on the same physical points of the crane in each image.
+     From those we derive the exact scale/rotation/translation that makes
+     the illustration's boom trace the same line the photo's boom
+     occupies, so the clip-path reveal reads as one crane turning into a
+     line drawing, not two different cranes swapping places. Recomputed
+     on every ScrollTrigger refresh (resize/orientation change), never
+     hardcoded to one viewport. */
+  var PHOTO_W = 1254, PHOTO_H = 1254;
+  var PHOTO_PIVOT = { x: 463, y: 808 }; // boom-to-turret pivot bearing
+  var PHOTO_JOINT = { x: 660, y: 450 }; // telescoping-section joint bracket
+
+  var ART_W = 1440, ART_H = 900;
+  var ART_PIVOT = { x: 610, y: 575 };   // same pivot bearing, matches CSS transform-origin
+  var ART_JOINT = { x: 730, y: 310 };   // same joint bracket
+
+  var artImg = hero.querySelector('.layer--art .layer__img');
+
+  function photoPointToScreen(p, cW, cH) {
+    var s = Math.max(cW / PHOTO_W, cH / PHOTO_H);
+    return { x: p.x * s + (cW - PHOTO_W * s) / 2, y: p.y * s + (cH - PHOTO_H * s) / 2 };
+  }
+
+  // Where the aligned art image should sit so ART_PIVOT/ART_JOINT land
+  // exactly on top of the photo's crane pivot/joint.
+  function alignedArtState() {
+    var r = hero.getBoundingClientRect();
+    var cW = r.width, cH = r.height;
+    var targetPivot = photoPointToScreen(PHOTO_PIVOT, cW, cH);
+    var targetJoint = photoPointToScreen(PHOTO_JOINT, cW, cH);
+    var av = { x: ART_JOINT.x - ART_PIVOT.x, y: ART_JOINT.y - ART_PIVOT.y };
+    var tv = { x: targetJoint.x - targetPivot.x, y: targetJoint.y - targetPivot.y };
+    var aLen = Math.hypot(av.x, av.y) || 1;
+    return {
+      x: targetPivot.x - ART_PIVOT.x,
+      y: targetPivot.y - ART_PIVOT.y,
+      scale: Math.hypot(tv.x, tv.y) / aLen,
+      rotation: (Math.atan2(tv.y, tv.x) - Math.atan2(av.y, av.x)) * 180 / Math.PI
+    };
+  }
+
+  // Where the settled (fully-revealed, "contain"-framed) art image
+  // should sit: the whole 1440x900 drawing centered in the hero, with
+  // no leftover rotation/offset from the photo-matching alignment.
+  function settledArtState() {
+    var r = hero.getBoundingClientRect();
+    var cW = r.width, cH = r.height;
+    var s = Math.min(cW / ART_W, cH / ART_H) * 0.92;
+    var pivotX = (cW - ART_W * s) / 2 + ART_PIVOT.x * s;
+    var pivotY = (cH - ART_H * s) / 2 + ART_PIVOT.y * s;
+    return { x: pivotX - ART_PIVOT.x, y: pivotY - ART_PIVOT.y, scale: s, rotation: 0 };
+  }
+
+  function applyAlignedArtState() {
+    if (artImg) gsap.set(artImg, alignedArtState());
+  }
+  applyAlignedArtState();
+  // Recompute the starting registration before every refresh (resize,
+  // orientation change) — invalidateOnRefresh below handles the settle
+  // tween's own end values the same way.
+  ScrollTrigger.addEventListener('refreshInit', applyAlignedArtState);
+
   var tl = gsap.timeline({
     scrollTrigger: {
       trigger: heroWrap,
@@ -76,14 +139,13 @@
   /* c) the photo is fully clipped away by now; hide it as a safety net */
   tl.to('.layer--photo', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 0.70);
 
-  /* d) settle: the illustration goes from COVER framing to CONTAIN so
-     the whole line drawing sits on screen once the photo is gone. */
+  /* d) settle: the illustration unwinds from "registered on the photo's
+     crane" to fully centered/contained, now that the photo is gone. */
   tl.to('.layer--art .layer__img', {
-    scale: function () {
-      var rw = window.innerWidth / 1440;
-      var rh = window.innerHeight / 900;
-      return (Math.min(rw, rh) / Math.max(rw, rh)) * 0.92;
-    },
+    x: function () { return settledArtState().x; },
+    y: function () { return settledArtState().y; },
+    scale: function () { return settledArtState().scale; },
+    rotation: 0,
     ease: 'power2.out',
     duration: 0.26
   }, 0.74);
