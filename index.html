@@ -112,6 +112,18 @@ button{font:inherit}
 
 .container{max-width:var(--container-max);margin:0 auto;padding-left:var(--container-pad);padding-right:var(--container-pad)}
 
+/* Recorrido de conversión: confianza → oferta → proceso → alcance →
+   prueba social → empresa → consulta. El primer bloque se mantiene junto
+   a la hero porque participa del reveal de entrada. */
+main{display:flex;flex-direction:column}
+main>.stats{order:1}
+main>.services{order:2}
+main>.process{order:3}
+main>.coverage{order:4}
+main>.testimonials{order:5}
+main>.about{order:6}
+main>.contact{order:7}
+
 @keyframes rmFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* ============================================================
@@ -304,19 +316,28 @@ html.hero-gsap .layer--art{display:flex}
 html.hero-gsap .layer--photo{clip-path:inset(0% 0% calc(var(--reveal) * 1%) 0%);will-change:clip-path}
 html.hero-gsap .stats{
   position:relative;z-index:10;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;
-  box-shadow:0 -40px 80px -30px rgba(0,0,0,.45);
   margin-top:-100vh;margin-top:-100svh;min-height:100vh;min-height:100svh;
 }
 
 /* ============================================================
    Stats section
    ============================================================ */
-.stats{background:var(--surface-page);padding:96px 40px 64px}
+.stats{background:var(--surface-section);padding:96px 40px 64px}
 .stats__grid{max-width:var(--container-max);margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
 .stats__left{display:flex;flex-direction:column;gap:28px}
 .stats__numbers{display:grid;grid-template-columns:repeat(4,auto);gap:40px;margin-top:4px;justify-content:start}
 .stats__right{display:flex;flex-direction:column;gap:20px}
 .stats__text{font-family:var(--font-body);font-size:var(--size-body);color:var(--text-body);line-height:var(--lh-body);margin:0}
+
+/* ============================================================
+   Trusted brands section
+   ============================================================ */
+.trusted-brands{background:var(--surface-section);padding:240px 0 0}
+.trusted-brands__inner{max-width:var(--container-max);margin:0 auto;border-bottom:1px solid var(--border-default);padding-bottom:48px}
+.trusted-brands__title{margin:0;text-align:center;font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,1.7vw,1.25rem);letter-spacing:.02em;line-height:1.1;text-transform:uppercase;color:var(--text-heading)}
+.trusted-brands__logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px clamp(16px,3vw,48px);align-items:center;margin-top:40px}
+.trusted-brands__logo{height:76px;display:flex;align-items:center;justify-content:center;padding:8px}
+.trusted-brands__logo img{width:100%;height:100%;max-width:160px;object-fit:contain;filter:grayscale(1)}
 
 /* ============================================================
    Services section
@@ -370,24 +391,21 @@ html.hero-gsap .stats{
 /* ============================================================
    Process section
    ============================================================ */
-.process{background:var(--surface-page);padding:96px 40px}
-.process__grid{max-width:var(--container-max);margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:start}
-.process__intro{display:flex;flex-direction:column;gap:20px}
-.process__text{font-family:var(--font-body);font-size:var(--size-body);color:var(--text-body);line-height:var(--lh-body);margin:0}
-.process__list{display:flex;flex-direction:column;gap:10px}
-
-/* ============================================================
-   Work / projects section
-   ============================================================ */
-.work{background:var(--surface-section);padding:96px 40px}
-.work__inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:32px}
-.work__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.work__nav{display:flex;align-items:center;gap:16px}
-.work__counter{font-family:var(--font-label);font-size:.875rem;color:var(--text-body);letter-spacing:1px}
-.work__btn{width:44px;height:44px;border-radius:var(--radius-sm);border:none;cursor:pointer;background:var(--color-white);color:var(--text-heading);display:inline-flex;align-items:center;justify-content:center;transition:background .15s ease,color .15s ease}
-.work__btn:hover{background:var(--action-primary);color:var(--color-white)}
-.work__slide{display:none}
-.work__slide[data-active="true"]{display:block;animation:rmFade .22s ease}
+.process{position:relative;isolation:isolate;min-height:720px;padding:88px 40px 40px;background-image:linear-gradient(90deg,rgba(0,20,77,.82) 0%,rgba(0,20,77,.55) 43%,rgba(0,20,77,.18) 100%),url(assets/photos/transporte-agro.png);background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:space-between}
+.process::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,20,77,.08),rgba(0,0,0,.25))}
+.process__intro{max-width:680px;display:flex;flex-direction:column;gap:18px;color:var(--color-white)}
+.process__intro .section-heading__eyebrow{color:var(--accent-decor)}
+.process__intro .section-heading__title{color:var(--color-white);font-size:var(--size-display-1)}
+.process__text{font-family:var(--font-body);font-size:var(--size-body-lg);color:rgba(255,255,255,.84);line-height:var(--lh-body);margin:0;max-width:52ch}
+.process__list{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:start}
+.process-card{min-height:72px;padding:0 24px;border:0;border-radius:var(--radius-md);background:var(--surface-section);color:var(--text-heading);overflow:hidden;transition:min-height .25s ease,background .2s ease,box-shadow .2s ease}
+.process-card__head{width:100%;min-height:72px;padding:0;display:flex;align-items:center;justify-content:space-between;gap:16px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.process-card__title{font-family:var(--font-display);font-size:clamp(1rem,1.6vw,1.25rem);font-weight:600;line-height:1.1;letter-spacing:.01em;text-transform:uppercase}
+.process-card__chevron{flex:0 0 auto;transition:transform .25s ease}
+.process-card__body{max-height:0;overflow:hidden;font-family:var(--font-body);font-size:.9375rem;line-height:1.55;color:var(--text-body);transition:max-height .25s ease,padding-bottom .25s ease}
+.process-card:hover,.process-card:focus-within,.process-card[data-open="true"]{min-height:170px;box-shadow:0 16px 28px rgba(0,0,0,.18)}
+.process-card:hover .process-card__body,.process-card:focus-within .process-card__body,.process-card[data-open="true"] .process-card__body{max-height:180px;padding-bottom:24px}
+.process-card:hover .process-card__chevron,.process-card:focus-within .process-card__chevron,.process-card[data-open="true"] .process-card__chevron{transform:rotate(180deg)}
 
 /* ============================================================
    About section
@@ -410,6 +428,7 @@ html.hero-gsap .stats{
 .testimonials__head{display:flex;justify-content:center}
 .testimonials__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .testimonials__grid .testimonial-card{background:var(--surface-card-alt)}
+.testimonials__cta{align-self:center}
 
 /* ============================================================
    Contact section
@@ -461,7 +480,10 @@ html.hero-gsap .stats{
 @media (max-width:1080px){
   .rm-nav__links{display:none}
   .rm-nav__burger{display:inline-flex}
-  .stats__grid,.services__head,.about__grid,.process__grid,.contact__grid{grid-template-columns:1fr}
+  .stats__grid,.services__head,.about__grid,.contact__grid{grid-template-columns:1fr}
+  .process{min-height:680px}
+  .process__list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trusted-brands__logos{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px clamp(32px,10vw,96px)}
   .services__layout{grid-template-columns:1fr}
   main>section,.coverage__content{padding-left:24px;padding-right:24px}
   .rm-footer__grid{grid-template-columns:1fr 1fr}
@@ -481,10 +503,15 @@ html.hero-gsap .stats{
 }
 
 @media (max-width:640px){
+  .trusted-brands{padding-top:56px;padding-bottom:0}
+  .trusted-brands__inner{padding-bottom:36px}
+  .trusted-brands__logos{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;margin-top:28px}
+  .trusted-brands__logo{height:62px}
+  .process{min-height:auto;padding:72px 20px 20px;background-position:58% center}
+  .process__list{grid-template-columns:1fr;gap:10px;margin-top:120px}
   .services__tabs{flex-direction:row;flex-wrap:wrap}
   .service-tab{flex:1 1 auto}
   .services__panel{min-height:420px}
-  .work__head{flex-direction:column;align-items:flex-start}
 }
 
 @media (max-width:480px){
@@ -615,6 +642,9 @@ a{color:inherit;text-decoration:none}
 .layer--photo{
   z-index:2;
   clip-path:inset(0% 0% calc(var(--reveal) * 1%) 0%);
+  /* La foto se desvanece sólo al final del reveal. Al depender de la
+     variable de scroll, recupera visibilidad siempre que se vuelve al tope. */
+  opacity:clamp(0, calc((100 - var(--reveal)) / 30), 1);
   will-change:clip-path;
 }
 .layer--photo::after{
@@ -769,17 +799,18 @@ a{color:inherit;text-decoration:none}
   position:absolute;
   inset:0;
   margin:auto;
-  width:2.8rem;height:2.8rem;
+  width:3.2rem;height:3.2rem;
   display:grid;place-items:center;
   border:0;
   border-radius:50%;
-  background:var(--blue);
+  background:transparent;
   color:var(--white);
-  box-shadow:0 6px 18px rgba(0,0,0,.28);
+  box-shadow:none;
   cursor:pointer;
   transition:transform .3s var(--ease),background .3s var(--ease);
 }
-.card__video-toggle:hover{transform:scale(1.09);background:var(--navy)}
+.card__video-toggle:hover{transform:scale(1.09);background:transparent}
+.card__video-toggle img{width:100%;height:100%;object-fit:contain}
 .card__video-toggle .icon--pause{display:none}
 .card__video-toggle.is-playing .icon--play{display:none}
 .card__video-toggle.is-playing .icon--pause{display:block}
@@ -796,9 +827,11 @@ a{color:inherit;text-decoration:none}
 .card__link{
   display:inline-block;
   margin-top:.6rem;
+  font-family:var(--font-display);
+  font-weight:600;
   font-size:.8rem;
   color:var(--navy);
-  border-bottom:1px solid currentColor;
+  text-decoration:none;
 }
 .card__link:hover{color:var(--orange)}
 
@@ -853,7 +886,6 @@ main > .stats{
   display:flex;
   flex-direction:column;
   justify-content:center;
-  box-shadow:0 -40px 80px -30px rgba(0,0,0,.45);
 }
 
 .about__image{
@@ -939,8 +971,8 @@ main > .stats{
               <source src="hero-crane-truck.mp4" type="video/mp4">
             </video>
             <button class="card__video-toggle" id="hero-crane-toggle" type="button" aria-label="Reproducir video" aria-pressed="false">
-              <svg class="icon--play" width="13" height="15" viewBox="0 0 13 15" fill="currentColor" aria-hidden="true"><path d="M13 7.5 0 15V0z"/></svg>
-              <svg class="icon--pause" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"><path d="M1 0h4v16H1zm8 0h4v16H9z"/></svg>
+              <img class="icon--play" src="assets/play-icon.svg" alt="" aria-hidden="true">
+              <img class="icon--pause" src="assets/pause-icon.svg" alt="" aria-hidden="true">
             </button>
           </div>
           <p class="card__num">+10</p>
@@ -975,9 +1007,22 @@ main > .stats{
       </div>
       <div class="stats__right">
         <p class="stats__text">Coordinamos cada etapa del traslado —permisos, ruta, izaje y entrega— para que el cronograma de tu obra o tu campaña no dependa de terceros.</p>
-        <a href="#nosotros" class="btn btn--dark" style="width:fit-content">Conocé al equipo</a>
+        <a href="#contacto" class="btn btn--dark" style="width:fit-content">Solicitar cotización</a>
       </div>
     </div>
+    <section class="trusted-brands" aria-labelledby="trusted-brands-title">
+      <div class="trusted-brands__inner">
+        <h2 class="trusted-brands__title" id="trusted-brands-title">Marcas que confían en nosotros</h2>
+        <div class="trusted-brands__logos">
+          <div class="trusted-brands__logo"><img src="assets/logos-arla.png" alt="Arla Foods"></div>
+          <div class="trusted-brands__logo"><img src="assets/logos-agroactiva.png" alt="Agroactiva"></div>
+          <div class="trusted-brands__logo"><img src="assets/logos-ypf.png" alt="YPF"></div>
+          <div class="trusted-brands__logo"><img src="assets/logos-arcor.png" alt="Arcor"></div>
+          <div class="trusted-brands__logo"><img src="assets/logos-sancor.png" alt="SanCor"></div>
+          <div class="trusted-brands__logo"><img src="assets/logos-sancor-seguros.png" alt="SanCor Seguros"></div>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- Services -->
@@ -1125,145 +1170,18 @@ main > .stats{
 
   <!-- Process -->
   <section class="process">
-    <div class="process__grid">
-      <div class="process__intro">
-        <div class="section-heading">
-          <span class="section-heading__eyebrow">Cómo trabajamos</span>
-          <h2 class="section-heading__title">Nada se improvisa.</h2>
-        </div>
-        <p class="process__text">Cada operación tiene un responsable asignado y un plan escrito antes de que el equipo salga del predio.</p>
+    <div class="process__intro">
+      <div class="section-heading">
+        <span class="section-heading__eyebrow">Cómo trabajamos</span>
+        <h2 class="section-heading__title">Nada se improvisa.</h2>
       </div>
-      <div class="process__list">
-        <div class="accordion-row" data-open="true">
-          <button class="accordion-row__head" aria-expanded="true">
-            <span class="accordion-row__title">01 — Relevamiento</span>
-            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
-          </button>
-          <div class="accordion-row__body">Tomamos medidas, peso y accesos del equipo. Si hace falta, vamos a verlo antes de cotizar.</div>
-        </div>
-        <div class="accordion-row" data-open="false">
-          <button class="accordion-row__head" aria-expanded="false">
-            <span class="accordion-row__title">02 — Planificación</span>
-            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
-          </button>
-          <div class="accordion-row__body">Definimos ruta, gálibos, permisos, escolta y el plan de izaje con memoria de cálculo.</div>
-        </div>
-        <div class="accordion-row" data-open="false">
-          <button class="accordion-row__head" aria-expanded="false">
-            <span class="accordion-row__title">03 — Ejecución</span>
-            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
-          </button>
-          <div class="accordion-row__body">Operadores propios, equipos verificados y seguimiento del viaje de punta a punta.</div>
-        </div>
-        <div class="accordion-row" data-open="false">
-          <button class="accordion-row__head" aria-expanded="false">
-            <span class="accordion-row__title">04 — Entrega</span>
-            <svg class="icon accordion-row__chevron" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M2.66732 10.7L5.03398 8.33337L16.0006 19.3L26.9673 8.33338L29.334 10.7L16.0006 24.0334L2.66732 10.7Z" fill="currentColor"/></svg>
-          </button>
-          <div class="accordion-row__body">Posicionamiento final, control junto al cliente y documentación de la operación.</div>
-        </div>
-      </div>
+      <p class="process__text">Cada operación tiene un responsable asignado y un plan escrito antes de que el equipo salga del predio.</p>
     </div>
-  </section>
-
-  <!-- Work / projects -->
-  <section class="work" id="proyectos">
-    <div class="work__inner">
-      <div class="work__head">
-        <div class="section-heading">
-          <span class="section-heading__eyebrow">Trabajos recientes</span>
-          <h2 class="section-heading__title">Obras que ya movimos.</h2>
-        </div>
-        <div class="work__nav">
-          <span class="work__counter" id="work-counter">01 / 03</span>
-          <button class="work__btn" id="work-prev" aria-label="Anterior">
-            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19 12L6 12M12 19L5 12L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
-          </button>
-          <button class="work__btn" id="work-next" aria-label="Siguiente">
-            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="work__stage">
-        <div class="work__slide" data-work-slide="0" data-active="true">
-          <div class="project-card">
-            <div class="project-card__media">
-              <div class="project-card__badge badge badge--dark">Servicio de grúa</div>
-              <img src="assets/photos/izaje-ypf.png" alt="Izaje y montaje de tótem">
-            </div>
-            <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Río Cuarto, Córdoba</span>
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Estación de servicio</span>
-              </div>
-              <h3 class="project-card__title">Izaje y montaje de tótem</h3>
-              <div class="project-card__tags">
-                <span class="badge badge--tag">Grúa 45t</span>
-                <span class="badge badge--tag">Montaje</span>
-                <span class="badge badge--tag">+1</span>
-              </div>
-              <p class="project-card__desc">Montaje de tótem publicitario de 14 metros con corte parcial de calzada y trabajo fuera del horario comercial para no interrumpir la operación.</p>
-              <div class="project-card__cta">
-                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
-                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="work__slide" data-work-slide="1" data-active="false">
-          <div class="project-card">
-            <div class="project-card__media">
-              <div class="project-card__badge badge badge--dark">Autoelevador</div>
-              <img src="assets/photos/autoelevador.png" alt="Movimiento interno de pallets">
-            </div>
-            <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Rosario, Santa Fe</span>
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Planta de acopio</span>
-              </div>
-              <h3 class="project-card__title">Movimiento interno de pallets</h3>
-              <div class="project-card__tags">
-                <span class="badge badge--tag">Autoelevador 7t</span>
-                <span class="badge badge--tag">Con operador</span>
-                <span class="badge badge--tag">+1</span>
-              </div>
-              <p class="project-card__desc">Servicio mensual de autoelevador con operador para carga y descarga de camiones en playa y depósito durante la temporada alta.</p>
-              <div class="project-card__cta">
-                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
-                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="work__slide" data-work-slide="2" data-active="false">
-          <div class="project-card">
-            <div class="project-card__media">
-              <div class="project-card__badge badge badge--dark">Montajes industriales</div>
-              <img src="assets/photos/torno.jpg" alt="Traslado de línea de producción">
-            </div>
-            <div class="project-card__body">
-              <div class="project-card__meta">
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12C12.55 12 13.0208 11.8042 13.4125 11.4125ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z" fill="currentColor"/></svg>Villa María, Córdoba</span>
-                <span class="project-card__meta-item"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 20.175L17.6 16.75C16.7667 16.1667 15.875 15.7292 14.925 15.4375C13.975 15.1458 13 15 12 15C11 15 10.0208 15.1458 9.0625 15.4375C8.10417 15.7292 7.2 16.1583 6.35 16.725L12 20.175ZM14.475 11.975C15.1583 11.2917 15.5 10.4667 15.5 9.5C15.5 8.53333 15.1583 7.70833 14.475 7.025C13.7917 6.34167 12.9667 6 12 6C11.0333 6 10.2083 6.34167 9.525 7.025C8.84167 7.70833 8.5 8.53333 8.5 9.5C8.5 10.4667 8.84167 11.2917 9.525 11.975C10.2083 12.6583 11.0333 13 12 13C12.9667 13 13.7917 12.6583 14.475 11.975ZM12 22.5L3 17V7L12 1.5L21 7V17L12 22.5Z" fill="currentColor"/></svg>Industria metalmecánica</span>
-              </div>
-              <h3 class="project-card__title">Traslado de línea de producción</h3>
-              <div class="project-card__tags">
-                <span class="badge badge--tag">Montaje</span>
-                <span class="badge badge--tag">Desarme</span>
-                <span class="badge badge--tag">+1</span>
-              </div>
-              <p class="project-card__desc">Desarme, traslado y remontaje de una línea completa en planta con producción activa, coordinado en etapas para sostener el ritmo de fábrica.</p>
-              <div class="project-card__cta">
-                <a href="#contacto" class="project-card__cta-label">Ver detalle</a>
-                <span class="project-card__cta-arrow"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12H18M12 5L19 12L12 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="process__list">
+      <div class="process-card" data-open="false"><button class="process-card__head" aria-expanded="false"><span class="process-card__title">Relevamiento</span><span class="process-card__chevron" aria-hidden="true">⌄</span></button><div class="process-card__body">Tomamos medidas, peso y accesos del equipo. Si hace falta, vamos a verlo antes de cotizar.</div></div>
+      <div class="process-card" data-open="false"><button class="process-card__head" aria-expanded="false"><span class="process-card__title">Planificación</span><span class="process-card__chevron" aria-hidden="true">⌄</span></button><div class="process-card__body">Definimos ruta, gálibos, permisos, escolta y el plan de izaje antes de iniciar la operación.</div></div>
+      <div class="process-card" data-open="false"><button class="process-card__head" aria-expanded="false"><span class="process-card__title">Ejecución</span><span class="process-card__chevron" aria-hidden="true">⌄</span></button><div class="process-card__body">Operadores propios, equipos verificados y seguimiento del traslado de punta a punta.</div></div>
+      <div class="process-card" data-open="false"><button class="process-card__head" aria-expanded="false"><span class="process-card__title">Entrega</span><span class="process-card__chevron" aria-hidden="true">⌄</span></button><div class="process-card__body">Posicionamiento final, control junto al cliente y documentación completa de la operación.</div></div>
     </div>
   </section>
 
@@ -1310,6 +1228,7 @@ main > .stats{
           <div><div class="testimonial-card__name">Diego Fuentes</div><div class="testimonial-card__org">Constructora Andina</div></div>
         </div>
       </div>
+      <a href="#contacto" class="btn btn--primary testimonials__cta">Pedí tu cotización</a>
     </div>
   </section>
 
@@ -1405,7 +1324,6 @@ main > .stats{
       <span class="rm-footer__col-title">Empresa</span>
       <a href="#nosotros">Nosotros</a>
       <a href="#cobertura">Cobertura nacional</a>
-      <a href="#proyectos">Proyectos</a>
       <a href="#contacto">Contacto</a>
     </div>
   </div>
@@ -1512,9 +1430,6 @@ main > .stats{
     tl.to('.hero__title',           { autoAlpha: 0, y: -60, ease: 'none', duration: 0.32 }, 0.12);
     tl.to('.nav',                   { autoAlpha: 0, y: -36, ease: 'none', duration: 0.25 }, 0.28);
 
-    /* La foto ya está recortada al 100%; la apagamos como seguro. */
-    tl.to('.layer--photo', { autoAlpha: 0, ease: 'none', duration: 0.04 }, 0.70);
-
     /* c) el asentado: recién ahora, con la foto fuera de pantalla,
        la ilustración pasa del encuadre COVER al CONTAIN para quedar
        entera.  scale = contain / cover = min(rw,rh) / max(rw,rh) */
@@ -1532,5 +1447,3 @@ main > .stats{
 
 </body>
 </html>
-
-

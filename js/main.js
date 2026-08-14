@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var SECTION_IDS = ['servicios', 'cobertura', 'proyectos', 'nosotros'];
+  var SECTION_IDS = ['servicios', 'cobertura', 'nosotros'];
 
   /* ---------- Nav: solid state, active link, logo swap ---------- */
   var nav = document.getElementById('site-nav');
@@ -75,41 +75,21 @@
     });
   });
 
-  /* ---------- Process: accordion (single row open at a time) ---------- */
-  var accordionRows = document.querySelectorAll('.accordion-row');
+  /* ---------- Process: expandable cards (single card open on touch) ---------- */
+  var accordionRows = document.querySelectorAll('.process-card');
   accordionRows.forEach(function (row) {
-    var head = row.querySelector('.accordion-row__head');
+    var head = row.querySelector('.process-card__head');
     head.addEventListener('click', function () {
       var isOpen = row.getAttribute('data-open') === 'true';
       accordionRows.forEach(function (r) {
         r.setAttribute('data-open', 'false');
-        r.querySelector('.accordion-row__head').setAttribute('aria-expanded', 'false');
+        r.querySelector('.process-card__head').setAttribute('aria-expanded', 'false');
       });
       if (!isOpen) {
         row.setAttribute('data-open', 'true');
         head.setAttribute('aria-expanded', 'true');
       }
     });
-  });
-
-  /* ---------- Work: projects carousel ---------- */
-  var workSlides = document.querySelectorAll('[data-work-slide]');
-  var workCounter = document.getElementById('work-counter');
-  var workIndex = 0;
-
-  function renderWork() {
-    workSlides.forEach(function (slide) {
-      slide.setAttribute('data-active', String(Number(slide.getAttribute('data-work-slide')) === workIndex));
-    });
-    workCounter.textContent = '0' + (workIndex + 1) + ' / 0' + workSlides.length;
-  }
-  document.getElementById('work-prev').addEventListener('click', function () {
-    workIndex = (workIndex - 1 + workSlides.length) % workSlides.length;
-    renderWork();
-  });
-  document.getElementById('work-next').addEventListener('click', function () {
-    workIndex = (workIndex + 1) % workSlides.length;
-    renderWork();
   });
 
   /* ---------- Contact form ---------- */
