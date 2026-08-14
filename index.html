@@ -118,11 +118,15 @@ button{font:inherit}
 main{display:flex;flex-direction:column}
 main>.stats{order:1}
 main>.services{order:2}
-main>.process{order:3}
-main>.coverage{order:4}
-main>.testimonials{order:5}
-main>.about{order:6}
-main>.contact{order:7}
+/* El pin-spacer que ScrollTrigger envuelve alrededor del carrusel no
+   hereda la clase de la sección, así que necesita su propio order para
+   no saltar al frente del flex. */
+main>.mcarousel,main>.pin-spacer{order:3}
+main>.process{order:4}
+main>.coverage{order:5}
+main>.testimonials{order:6}
+main>.about{order:7}
+main>.contact{order:8}
 
 @keyframes rmFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -924,6 +928,73 @@ main > .stats{
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
+
+<style>
+/* ============================================================
+   CARRUSEL MORPH — composición editorial fijada al scroll.
+   La imagen principal se encoge hacia la miniatura superior
+   izquierda mientras la miniatura inferior derecha crece hasta el
+   encuadre principal. Los .mc-slot son cajas guía invisibles: el JS
+   (js/morph-carousel.js) mide sus rects y anima las figuras sólo
+   con transforms, por eso acá pueden posicionarse con cualquier
+   técnica de layout sin romper la animación.
+   ============================================================ */
+
+/* El @font-face de Azeret del primer bloque apunta a ../assets, que
+   desde la raíz no resuelve; esta declaración usa la ruta real. */
+@font-face{
+  font-family:"Azeret Mono";
+  src:url("assets/fonts/AzeretMono-Variable.ttf") format("truetype-variations");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+
+.mcarousel{position:relative;background:var(--surface-section)}
+.mc-stage{position:relative;height:100vh;height:100svh;overflow:hidden}
+
+/* Las tres cajas comparten proporción: el morph escala de forma
+   uniforme y la imagen jamás se deforma. */
+.mc-slot{position:absolute;aspect-ratio:33/50;visibility:hidden;pointer-events:none}
+.mc-slot--main{left:30%;top:50%;translate:0 -50%;width:min(38vw,60vh)}
+.mc-slot--prev{left:20%;top:4.5vh;width:clamp(64px,7.5vw,96px)}
+.mc-slot--next{right:22%;bottom:4.4vh;width:clamp(64px,7.8vw,100px)}
+
+.mc-figure{
+  position:absolute;left:0;top:0;margin:0;overflow:hidden;border-radius:4px;
+  transform-origin:0 0;will-change:transform;pointer-events:none;
+  visibility:hidden; /* el primer render decide qué figura se ve */
+}
+.mc-figure img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+.mc-copy{position:absolute;left:70%;right:5vw;top:47%;translate:0 -50%;display:grid;z-index:110}
+.mc-item{grid-area:1/1;display:flex;flex-direction:column;gap:14px;align-items:flex-start;visibility:hidden}
+.mc-item__index{font-family:var(--font-label);font-size:.78rem;letter-spacing:.35em;color:var(--text-body)}
+.mc-item__title{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,2.8vw,2.7rem);line-height:1;letter-spacing:.01em;text-transform:uppercase;color:var(--text-heading);margin:0}
+.mc-item__desc{font-family:var(--font-body);font-size:var(--size-body);color:var(--text-body);line-height:var(--lh-body);margin:0;max-width:30ch}
+.mc-item__cta{margin-top:12px}
+
+/* Fallback sin GSAP o con reduced-motion: lista apilada simple. */
+.mcarousel[data-mc-static]{padding:clamp(3rem,8vw,6rem) var(--pad)}
+.mc-static{display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,4rem);max-width:var(--container-max);margin:0 auto}
+.mc-static-item{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:center}
+.mc-static-item img{width:100%;aspect-ratio:33/50;object-fit:cover;border-radius:4px}
+/* grid-area:auto deshace el apilado 1/1 del modo animado: acá la
+   imagen va en la primera columna y el texto en la segunda. */
+.mc-static-item .mc-item{visibility:visible;grid-area:auto}
+
+@media (max-width:860px){
+  /* Misma coreografía, miniaturas más chicas y siempre dentro del
+     viewport; el texto pasa debajo de la imagen principal. */
+  .mc-slot--main{left:50%;top:12vh;translate:-50% 0;width:min(62vw,44vh)}
+  .mc-slot--prev{left:5vw;top:5vh;width:clamp(44px,14vw,60px)}
+  .mc-slot--next{right:5vw;bottom:28vh;width:clamp(44px,14vw,60px)}
+  .mc-copy{left:7vw;right:7vw;top:auto;bottom:5vh;translate:0 0}
+  .mc-item{gap:10px}
+  .mc-item__desc{max-width:34ch}
+  .mc-static-item{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
@@ -1130,6 +1201,10 @@ main > .stats{
       </div>
     </div>
   </section>
+
+  <!-- Carrusel morph — los slides se generan desde el arreglo de
+       datos de js/morph-carousel.js -->
+  <section class="mcarousel" id="mcarousel" aria-label="Servicios destacados"></section>
 
   <!-- Coverage -->
   <section class="coverage" id="cobertura">
@@ -1444,6 +1519,7 @@ main > .stats{
     }, 0.74);
   })();
   </script>
+  <script src="js/morph-carousel.js"></script>
 
 </body>
 </html>
