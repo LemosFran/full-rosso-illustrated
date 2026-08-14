@@ -931,6 +931,68 @@ main > .stats{
 
 <style>
 /* ============================================================
+   LOADER DE ENTRADA
+   Panel navy a pantalla completa con la marca y una barra de
+   progreso; al completarse sube y descubre la hero. Portado de
+   getlayer-prueba conservando tiempos, curvas y estructura.
+
+   Dos clases separadas en <html>, puestas por el script de la
+   cabecera antes del primer pintado:
+     .rm-loading  el panel existe
+     .rm-locked   el scroll está bloqueado
+   Van separadas porque el bloqueo se libera al empezar la salida,
+   mientras el panel todavía tiene que verse subir. Sin JS no se
+   agrega ninguna de las dos: no hay loader ni bloqueo, y la página
+   queda igual de utilizable.
+   ============================================================ */
+html:not(.rm-loading) #rm-loader{display:none}
+html.rm-locked{overflow:hidden}
+
+#rm-loader{
+  position:fixed;inset:0;z-index:200;
+  background:var(--color-navy,#00144D);color:var(--color-white,#fff);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  will-change:transform;
+}
+#rm-loader__mark{
+  opacity:0;transform:translateY(16px);
+  transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);
+}
+#rm-loader.is-in #rm-loader__mark{opacity:1;transform:none}
+#rm-loader__mark img{height:clamp(2.2rem,5vw,3.4rem);width:auto;max-width:76vw}
+#rm-loader__track{
+  width:10rem;max-width:60vw;height:1px;border-radius:999px;
+  background:rgba(255,255,255,.2);overflow:hidden;
+}
+#rm-loader__fill{
+  display:block;height:100%;width:100%;background:var(--color-white,#fff);
+  transform:scaleX(0);transform-origin:left;
+}
+@media (prefers-reduced-motion:reduce){
+  #rm-loader__mark{transition:none;opacity:1;transform:none}
+}
+</style>
+
+<script>
+/* Antes del primer pintado, para que el panel esté desde el primer
+   frame y no asome la página detrás. También desactiva la restauración
+   de scroll del navegador: tras un refresh a mitad de página el loader
+   descubriría el medio del sitio en lugar de la hero. */
+(function () {
+  var d = document.documentElement;
+  d.classList.add('rm-loading', 'rm-locked');
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  /* Red de seguridad: si js/loader.js no llega a ejecutarse, las clases
+     se caen solas y el panel deja de tapar el sitio. */
+  window.rmLoaderFailsafe = setTimeout(function () {
+    d.classList.remove('rm-loading', 'rm-locked');
+  }, 8000);
+})();
+</script>
+<script src="js/loader.js" defer></script>
+
+<style>
+/* ============================================================
    CARRUSEL MORPH — composición editorial fijada al scroll.
    La imagen principal se encoge hacia la miniatura superior
    izquierda mientras la miniatura inferior derecha crece hasta el
@@ -1030,6 +1092,12 @@ main > .stats{
 </head>
 
 <body>
+
+  <!-- ========== LOADER ========== -->
+  <div id="rm-loader" role="status" aria-live="polite" aria-label="Cargando">
+    <span id="rm-loader__mark"><img src="assets/logo-white.png" alt="Rosso Maquinarias" width="1014" height="170"></span>
+    <span id="rm-loader__track"><span id="rm-loader__fill"></span></span>
+  </div>
 
   <!-- ========== HERO ========== -->
   <div class="hero-wrap" id="hero-wrap">
