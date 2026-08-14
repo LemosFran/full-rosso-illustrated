@@ -214,12 +214,29 @@
        (idéntica a la caja principal). Sólo acá se tocan propiedades
        de layout; el scroll anima únicamente transforms. */
     function measure() {
+      /* Primero se publica el alto real del texto: en móvil las cajas
+         guía reservan la franja inferior a partir de --mc-copy-h, así
+         que tiene que estar puesto antes de leer sus rects. Los ítems
+         comparten celda de grid, de modo que el más alto marca la
+         franja para todos. Leerlo no es circular: el alto del bloque
+         de texto depende del contenido, nunca de la variable. */
+      var copyH = 0;
+      for (var k = 0; k < texts.length; k++) {
+        copyH = Math.max(copyH, texts[k].getBoundingClientRect().height);
+      }
+      stage.style.setProperty('--mc-copy-h', Math.ceil(copyH) + 'px');
+
       var m = slotMain.getBoundingClientRect();
       var stageRect = stage.getBoundingClientRect();
       A.prev = anchor(slotPrev.getBoundingClientRect(), m);
       A.next = anchor(slotNext.getBoundingClientRect(), m);
-      vPrev = { x: A.prev.x * 0.16, y: A.prev.y * 0.16 };
-      vNext = { x: A.next.x * 0.16, y: A.next.y * 0.16 };
+      /* La prolongación de la diagonal se acorta en pantallas chicas:
+         ahí el borde del viewport y la franja de texto quedan a pocos
+         píxeles de la miniatura, y un ítem en cola —aunque entre casi
+         transparente— no debe asomarse a ninguno de los dos. */
+      var ext = window.matchMedia('(max-width:860px)').matches ? 0.07 : 0.16;
+      vPrev = { x: A.prev.x * ext, y: A.prev.y * ext };
+      vNext = { x: A.next.x * ext, y: A.next.y * ext };
       gsap.set(figures, {
         left: m.left - stageRect.left,
         top: m.top - stageRect.top,
@@ -260,6 +277,14 @@
 
     ScrollTrigger.addEventListener('refresh', measure);
     measure();
+
+    /* Las tipografías cargan con font-display:swap y pueden asentarse
+       después del load: al cambiar el alto del texto hay que rehacer la
+       medición o la franja inferior queda con el valor de la fuente
+       provisoria. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    }
   }, section);
 
   /* Sitio estático sin rerenders, pero el contexto queda expuesto por

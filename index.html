@@ -950,7 +950,12 @@ main > .stats{
   font-display:swap;
 }
 
-.mcarousel{position:relative;background:var(--surface-section)}
+/* A sangre: bajo 1080px la regla general main>section mete 24px de
+   padding lateral y encogería el escenario, pero las cajas guía se
+   posicionan en vw. Sin esto el ancho del escenario y el de las
+   unidades no coinciden y las miniaturas quedan más adentro de lo
+   calculado. El modo estático sí conserva su padding. */
+.mcarousel:not([data-mc-static]){position:relative;background:var(--surface-section);padding-left:0;padding-right:0}
 .mc-stage{position:relative;height:100vh;height:100svh;overflow:hidden}
 
 /* Las tres cajas comparten proporción: el morph escala de forma
@@ -975,7 +980,7 @@ main > .stats{
 .mc-item__cta{margin-top:12px}
 
 /* Fallback sin GSAP o con reduced-motion: lista apilada simple. */
-.mcarousel[data-mc-static]{padding:clamp(3rem,8vw,6rem) var(--pad)}
+.mcarousel[data-mc-static]{position:relative;background:var(--surface-section);padding:clamp(3rem,8vw,6rem) var(--pad)}
 .mc-static{display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,4rem);max-width:var(--container-max);margin:0 auto}
 .mc-static-item{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(1.5rem,4vw,3rem);align-items:center}
 .mc-static-item img{width:100%;aspect-ratio:33/50;object-fit:cover;border-radius:4px}
@@ -984,12 +989,39 @@ main > .stats{
 .mc-static-item .mc-item{visibility:visible;grid-area:auto}
 
 @media (max-width:860px){
-  /* Misma coreografía, miniaturas más chicas y siempre dentro del
-     viewport; el texto pasa debajo de la imagen principal. */
-  .mc-slot--main{left:50%;top:12vh;translate:-50% 0;width:min(62vw,44vh)}
-  .mc-slot--prev{left:5vw;top:5vh;width:clamp(44px,14vw,60px)}
-  .mc-slot--next{right:5vw;bottom:28vh;width:clamp(44px,14vw,60px)}
-  .mc-copy{left:7vw;right:7vw;top:auto;bottom:5vh;translate:0 0}
+  /* Misma coreografía, repartida en franjas que no se pisan: abajo el
+     texto, arriba la imagen principal con el alto que sobra, y las
+     miniaturas en los márgenes laterales de la imagen.
+
+     --mc-copy-h lo publica el JS con el alto real del bloque de texto
+     (el ítem más alto), así que la franja inferior se reserva sola: no
+     hay porcentajes adivinados que se queden cortos cuando la
+     descripción ocupa una línea más o la pantalla es baja. */
+  .mc-stage{
+    --mc-edge:4svh;
+    --mc-top:4svh;
+    --mc-gap:clamp(14px,3svh,26px);
+    --mc-copy-h:15rem;                       /* arranque; el JS lo corrige */
+    --mc-thumb:clamp(42px,12vw,54px);
+  }
+  /* Sólo se fija el alto: aspect-ratio deriva el ancho y las tres cajas
+     conservan la misma proporción, que es lo que permite que el morph
+     escale de forma uniforme. */
+  .mc-slot--main{
+    left:50%;top:var(--mc-top);translate:-50% 0;width:auto;
+    height:min(
+      calc(100svh - var(--mc-top) - var(--mc-gap) - var(--mc-copy-h) - var(--mc-edge)),
+      88vw                                   /* deja ~21vw de margen a cada lado para las miniaturas */
+    );
+  }
+  .mc-slot--prev{left:4vw;top:2svh;width:var(--mc-thumb)}
+  /* Dos gaps de aire sobre el texto: el margen alcanza también para la
+     prolongación diagonal con la que entra la miniatura siguiente. */
+  .mc-slot--next{
+    right:4vw;width:var(--mc-thumb);
+    bottom:calc(var(--mc-copy-h) + var(--mc-edge) + var(--mc-gap) * 2);
+  }
+  .mc-copy{left:7vw;right:7vw;top:auto;bottom:var(--mc-edge);translate:0 0}
   .mc-item{gap:10px}
   .mc-item__desc{max-width:34ch}
   .mc-static-item{grid-template-columns:1fr}
