@@ -62,6 +62,15 @@
     return node;
   }
 
+  /* Contador de scrolls automáticos, compartido con
+     js/scroll-reveal.js. Es un contador y no un booleano para que dos
+     ajustes encadenados no se pisen al apagarlo. */
+  function markAuto(delta) {
+    return function () {
+      window.rmAutoScroll = Math.max(0, (window.rmAutoScroll || 0) + delta);
+    };
+  }
+
   function indexLabel(i, total) {
     var pad = function (v) { return String(v).padStart(2, '0'); };
     return '[ ' + pad(i + 1) + '/' + pad(total) + ' ]';
@@ -269,7 +278,15 @@
           duration: { min: 0.2, max: 0.5 },
           delay: 0.1,
           ease: 'power1.inOut',
-          inertia: false
+          inertia: false,
+          /* El ajuste mueve la página por su cuenta, y hacia cualquiera
+             de los dos lados. Se avisa mientras dura para que el
+             revelado al subir (js/scroll-reveal.js) no lea ese
+             movimiento como un gesto del usuario y encienda o apague
+             la barra solo. */
+          onStart: markAuto(1),
+          onComplete: markAuto(-1),
+          onInterrupt: markAuto(-1)
         },
         invalidateOnRefresh: true
       }

@@ -1090,8 +1090,57 @@ html.rm-locked{overflow:hidden}
 }
 
 /* ============================================================
+   BARRA FIJA — aparece al subir (js/scroll-reveal.js).
+   La hero ya trae su propia barra, así que ésta entra recién cuando
+   la portada quedó atrás: por eso va en versión sólida, pensada para
+   leerse sobre las secciones claras. Repite el contenido de la barra
+   de la hero (marca, enlaces y CTA) con el logo navy, que es el que
+   corresponde sobre fondo blanco.
+   ============================================================ */
+#sticky-nav{
+  position:fixed;top:0;left:0;right:0;z-index:150;
+  display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,3vw,40px);
+  padding:13px clamp(20px,4vw,40px);
+  background:var(--surface-page);
+  box-shadow:0 1px 0 var(--border-default),0 12px 30px -24px rgba(0,0,0,.5);
+  opacity:0;visibility:hidden;transform:translateY(-100%);
+  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s;
+}
+#sticky-nav.is-visible{opacity:1;visibility:visible;transform:none}
+
+.snav__logo{display:block;line-height:0;flex:0 0 auto}
+.snav__logo img{height:clamp(19px,1.9vw,25px);width:auto;display:block}
+.snav__links{display:flex;gap:clamp(16px,2.4vw,32px)}
+.snav__links a{
+  font-family:var(--font-display);font-weight:600;font-size:var(--size-label);
+  letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--text-heading);
+  padding-bottom:3px;border-bottom:2px solid transparent;white-space:nowrap;
+  transition:border-color .2s var(--ease);
+}
+.snav__links a:hover{border-bottom-color:var(--accent-decor)}
+.snav__cta{
+  flex:0 0 auto;white-space:nowrap;
+  font-family:var(--font-display);font-weight:600;font-size:var(--size-label);
+  letter-spacing:var(--ls-label);text-transform:uppercase;
+  color:var(--white);background:var(--blue);
+  padding:11px 20px;border-radius:var(--radius-sm);
+  transition:background .25s var(--ease);
+}
+.snav__cta:hover{background:var(--navy);color:var(--white)}
+
+@media (max-width:860px){
+  /* Igual que la barra de la hero: sin enlaces, marca y CTA nomás. */
+  .snav__links{display:none}
+  #sticky-nav{padding:10px clamp(16px,4vw,24px)}
+  .snav__cta{padding:10px 15px;font-size:.75rem}
+}
+@media (prefers-reduced-motion:reduce){
+  #sticky-nav{transition:opacity .01s,visibility .01s;transform:none}
+}
+
+/* ============================================================
    BOTÓN FLOTANTE DE WHATSAPP
-   Sólo aparece al subir con el scroll: js/wa-fab.js le pone
+   Sólo aparece al subir con el scroll: js/scroll-reveal.js le pone
    .is-visible. Arranca oculto —y sin JS se queda oculto— así que
    nunca queda tapando la hero de entrada.
 
@@ -1539,6 +1588,22 @@ html.rm-locked{overflow:hidden}
   </div>
 </footer>
 
+<!-- ========== BARRA FIJA ==========
+     Duplica la navegación de la hero para las secciones de abajo.
+     Arranca oculta; js/scroll-reveal.js la muestra al subir. -->
+<header id="sticky-nav">
+  <a class="snav__logo" href="#hero" aria-label="Rosso Maquinarias — ir al inicio">
+    <img src="assets/logo-navy.png" alt="Rosso Maquinarias" width="560" height="85">
+  </a>
+  <nav class="snav__links" aria-label="Secciones">
+    <a href="#servicios">Izaje</a>
+    <a href="#servicios">Hidroelevador</a>
+    <a href="#servicios">Suelos</a>
+    <a href="#servicios">Obra</a>
+  </nav>
+  <a class="snav__cta" href="#contacto">Contactar</a>
+</header>
+
 <!-- ========== WHATSAPP ==========
      OJO: el número es el mismo placeholder que figura en la sección de
      contacto (+54 9 358 000 0000). Al reemplazarlo va en formato
@@ -1662,7 +1727,7 @@ html.rm-locked{overflow:hidden}
   })();
   </script>
   <script src="js/morph-carousel.js"></script>
-  <script src="js/wa-fab.js" defer></script>
+  <script src="js/scroll-reveal.js" defer></script>
 
 </body>
 </html>
